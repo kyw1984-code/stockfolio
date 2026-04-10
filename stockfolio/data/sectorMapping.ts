@@ -1,0 +1,122 @@
+export const SECTOR_MAPPING: Record<string, string> = {
+  // Technology
+  AAPL: 'Technology',
+  MSFT: 'Technology',
+  GOOGL: 'Technology',
+  GOOG: 'Technology',
+  META: 'Technology',
+  NVDA: 'Technology',
+  AMD: 'Technology',
+  INTC: 'Technology',
+  CRM: 'Technology',
+  ADBE: 'Technology',
+  ORCL: 'Technology',
+  CSCO: 'Technology',
+  AVGO: 'Technology',
+  TXN: 'Technology',
+  QCOM: 'Technology',
+  // Financial
+  JPM: 'Financial',
+  BAC: 'Financial',
+  WFC: 'Financial',
+  GS: 'Financial',
+  MS: 'Financial',
+  V: 'Financial',
+  MA: 'Financial',
+  AXP: 'Financial',
+  BLK: 'Financial',
+  SCHW: 'Financial',
+  // Healthcare
+  JNJ: 'Healthcare',
+  UNH: 'Healthcare',
+  PFE: 'Healthcare',
+  ABBV: 'Healthcare',
+  MRK: 'Healthcare',
+  LLY: 'Healthcare',
+  TMO: 'Healthcare',
+  ABT: 'Healthcare',
+  // Consumer
+  AMZN: 'Consumer',
+  TSLA: 'Consumer',
+  HD: 'Consumer',
+  NKE: 'Consumer',
+  MCD: 'Consumer',
+  SBUX: 'Consumer',
+  KO: 'Consumer',
+  PEP: 'Consumer',
+  PG: 'Consumer',
+  COST: 'Consumer',
+  WMT: 'Consumer',
+  // Energy
+  XOM: 'Energy',
+  CVX: 'Energy',
+  COP: 'Energy',
+  SLB: 'Energy',
+  EOG: 'Energy',
+  // Industrial
+  CAT: 'Industrial',
+  BA: 'Industrial',
+  HON: 'Industrial',
+  UPS: 'Industrial',
+  GE: 'Industrial',
+  MMM: 'Industrial',
+  LMT: 'Industrial',
+  RTX: 'Industrial',
+  // Real Estate / REITs
+  O: 'Real Estate',
+  AMT: 'Real Estate',
+  PLD: 'Real Estate',
+  SPG: 'Real Estate',
+  // Utilities
+  NEE: 'Utilities',
+  DUK: 'Utilities',
+  SO: 'Utilities',
+  // Communication
+  DIS: 'Communication',
+  NFLX: 'Communication',
+  CMCSA: 'Communication',
+  T: 'Communication',
+  VZ: 'Communication',
+  // ETFs
+  SPY: 'ETF',
+  QQQ: 'ETF',
+  VTI: 'ETF',
+  VOO: 'ETF',
+  SCHD: 'ETF',
+  VYM: 'ETF',
+  JEPI: 'ETF',
+  JEPQ: 'ETF',
+  VIG: 'ETF',
+  DGRO: 'ETF',
+  HDV: 'ETF',
+  NOBL: 'ETF',
+  IWM: 'ETF',
+  DIA: 'ETF',
+  VEA: 'ETF',
+  VWO: 'ETF',
+  BND: 'ETF',
+  AGG: 'ETF',
+  TLT: 'ETF',
+};
+
+export const SECTOR_COLORS: Record<string, string> = {
+  Technology: '#007AFF',
+  Financial: '#34C759',
+  Healthcare: '#FF3B30',
+  Consumer: '#FF9500',
+  Energy: '#FFCC02',
+  Industrial: '#5856D6',
+  'Real Estate': '#AF52DE',
+  Utilities: '#00C7BE',
+  Communication: '#FF2D55',
+  ETF: '#64D2FF',
+  Other: '#8E8E93',
+};
+
+export function getSector(ticker: string): string {
+  return SECTOR_MAPPING[ticker.toUpperCase()] || 'Other';
+}
+
+export function getSectorColor(sector: string): string {
+  return SECTOR_COLORS[sector] || SECTOR_COLORS.Other;
+}
