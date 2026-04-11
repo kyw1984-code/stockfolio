@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"try { const p = require\\('./node_modules/expo/node_modules/@expo/cli/package.json'\\); console.log\\('exports:', JSON.stringify\\(p.exports\\).slice\\(0,200\\)\\); } catch\\(e\\) { console.error\\(e.message\\); }\")",
+      "Bash(node -e \"const p = require\\('./node_modules/expo/node_modules/@expo/cli/package.json'\\); console.log\\(p.version, p.main, p.bin\\)\")"
+    ]
+  }
+}

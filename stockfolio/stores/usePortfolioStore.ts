@@ -123,64 +123,63 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   },
 
   refreshPrices: async () => {
-    const { holdings } = get();
-    if (holdings.length === 0) return;
+    const { holdings, isLoading } = get();
+    if (holdings.length === 0 || isLoading) return;
 
     set({ isLoading: true });
 
-    const updates = await Promise.allSettled(
-      holdings.map(async (h) => {
-        const cached = getCachedPrice(h.symbol);
-        if (cached) {
-          return { symbol: h.symbol, price: cached.price, previousClose: cached.price - cached.change };
-        }
+    try {
+      // 5개씩 나눠서 순차 처리 (동시 API 호출 폭주 방지)
+      const BATCH_SIZE = 5;
+      const allResults: Array<{ symbol: string; price: number; previousClose: number } | null> = [];
 
-        if (h.market === 'KR') {
-          // 한국주식: 공공데이터포털 API
-          const krData = await getKrxStockPrice(h.symbol);
-          if (krData) {
-            const price = parseFloat(krData.clpr);
-            const change = parseFloat(krData.vs);
-            const changePercent = parseFloat(krData.fltRt);
-            setCachedPrice(h.symbol, price, change, changePercent);
-            return { symbol: h.symbol, price, previousClose: price - change };
-          }
-          return null;
-        }
+      for (let i = 0; i < holdings.length; i += BATCH_SIZE) {
+        const batch = holdings.slice(i, i + BATCH_SIZE);
+        const batchUpdates = await Promise.allSettled(
+          batch.map(async (h) => {
+            const cached = getCachedPrice(h.symbol);
+            if (cached) {
+              return { symbol: h.symbol, price: cached.price, previousClose: cached.price - cached.change };
+            }
 
-        // 미국주식: Finnhub API
-        const quote = await getQuote(h.symbol);
-        if (quote && quote.c > 0) {
-          setCachedPrice(h.symbol, quote.c, quote.d, quote.dp);
-          return { symbol: h.symbol, price: quote.c, previousClose: quote.pc };
-        }
-        return null;
-      })
-    );
+            if (h.market === 'KR') {
+              const krData = await getKrxStockPrice(h.symbol);
+              if (krData) {
+                const price = parseFloat(krData.clpr);
+                const change = parseFloat(krData.vs);
+                const changePercent = parseFloat(krData.fltRt);
+                setCachedPrice(h.symbol, price, change, changePercent);
+                return { symbol: h.symbol, price, previousClose: price - change };
+              }
+              return null;
+            }
 
-    set((state) => {
-      const newHoldings = state.holdings.map((h) => {
-        const result = updates.find(
-          (u) =>
-            u.status === 'fulfilled' &&
-            u.value &&
-            u.value.symbol === h.symbol
+            const quote = await getQuote(h.symbol);
+            if (quote && quote.c > 0) {
+              setCachedPrice(h.symbol, quote.c, quote.d, quote.dp);
+              return { symbol: h.symbol, price: quote.c, previousClose: quote.pc };
+            }
+            return null;
+          })
         );
-        if (result && result.status === 'fulfilled' && result.value) {
-          return {
-            ...h,
-            currentPrice: result.value.price,
-            previousClose: result.value.previousClose,
-          };
-        }
-        return h;
+        batchUpdates.forEach((r) => {
+          allResults.push(r.status === 'fulfilled' ? r.value : null);
+        });
+      }
+
+      set((state) => {
+        const newHoldings = state.holdings.map((h) => {
+          const result = allResults.find((r) => r && r.symbol === h.symbol);
+          if (result) {
+            return { ...h, currentPrice: result.price, previousClose: result.previousClose };
+          }
+          return h;
+        });
+        return { holdings: newHoldings, isLoading: false, lastUpdated: new Date().toISOString() };
       });
-      return {
-        holdings: newHoldings,
-        isLoading: false,
-        lastUpdated: new Date().toISOString(),
-      };
-    });
+    } catch {
+      set({ isLoading: false });
+    }
   },
 
   getTotalValue: () => {

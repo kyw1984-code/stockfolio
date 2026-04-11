@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-// Free Finnhub API key — replace with your own from finnhub.io
-const API_KEY = 'demo';
+// Finnhub API key
+const API_KEY = 'd7cu5epr01qv03etmimgd7cu5epr01qv03etmin0';
 const BASE_URL = 'https://finnhub.io/api/v1';
 
 const api = axios.create({
   baseURL: BASE_URL,
   params: { token: API_KEY },
-  timeout: 10000,
+  timeout: 5000,
 });
 
 export interface QuoteData {

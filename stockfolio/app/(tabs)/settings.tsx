@@ -1,10 +1,8 @@
-import { View, Text, ScrollView, TouchableOpacity, Switch, StyleSheet, TextInput } from 'react-native';
+import { startTransition } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Switch, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSettingsStore } from '../../stores/useSettingsStore';
-import { setApiKey } from '../../services/finnhubApi';
-import { setPublicDataApiKey } from '../../services/publicDataApi';
-import { setBokApiKey } from '../../services/bokApi';
 import DataSourceFooter from '../../components/DataSourceFooter';
 import i18n from '../../i18n';
 
@@ -17,31 +15,21 @@ export default function SettingsScreen() {
     priceAlertsEnabled,
     dividendAlertsEnabled,
     isPro,
-    finnhubApiKey,
     setCurrency,
     setLanguage,
     togglePriceAlerts,
     toggleDividendAlerts,
-    setFinnhubApiKey,
   } = useSettingsStore();
 
   const isKo = language === 'ko';
 
   const handleLanguageToggle = () => {
     const newLang = language === 'en' ? 'ko' : 'en';
-    setLanguage(newLang);
-    i18n.changeLanguage(newLang);
-    // Korean mode defaults to KRW
-    if (newLang === 'ko') {
-      setCurrency('KRW');
-    }
-  };
-
-  const handleFinnhubKeyChange = (key: string) => {
-    setFinnhubApiKey(key);
-    if (key.length > 5) {
-      setApiKey(key);
-    }
+    if (newLang === 'ko') setCurrency('KRW');
+    startTransition(() => {
+      setLanguage(newLang);
+      i18n.changeLanguage(newLang);
+    });
   };
 
   return (
@@ -112,28 +100,6 @@ export default function SettingsScreen() {
             onValueChange={toggleDividendAlerts}
             trackColor={{ true: '#007AFF' }}
           />
-        </View>
-      </View>
-
-      {/* API Keys */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>API Keys</Text>
-        <View style={styles.inputGroup}>
-          <Text style={styles.inputLabel}>Finnhub API Key</Text>
-          <TextInput
-            style={styles.input}
-            value={finnhubApiKey}
-            onChangeText={handleFinnhubKeyChange}
-            placeholder="Enter Finnhub API key"
-            placeholderTextColor="#C7C7CC"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-          <Text style={styles.inputHint}>
-            {isKo
-              ? 'finnhub.io에서 무료 키를 발급받으세요'
-              : 'Get a free key at finnhub.io'}
-          </Text>
         </View>
       </View>
 

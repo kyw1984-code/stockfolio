@@ -35,10 +35,14 @@ export default function PortfolioScreen() {
 
   useEffect(() => {
     fetchRate();
+  }, []);
+
+  // 종목 추가/삭제 시 가격 자동 갱신
+  useEffect(() => {
     if (holdings.length > 0) {
       refreshPrices();
     }
-  }, []);
+  }, [holdings.length]);
 
   const onRefresh = useCallback(() => {
     fetchRate();

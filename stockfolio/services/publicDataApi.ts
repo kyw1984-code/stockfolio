@@ -5,8 +5,8 @@
  */
 import axios from 'axios';
 
-// 공공데이터포털 API 키 — .env 또는 settings에서 관리
-let API_KEY = '';
+// 공공데이터포털 API 키
+let API_KEY = '1f2cbe2561eaeb81920ec02d6824e08a3c958fc530cf0230e2b0f981f97cb11f';
 
 const STOCK_PRICE_URL =
   'https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo';
@@ -65,7 +65,7 @@ export async function getKrxStockPrice(
         beginBasDt: basDt,
         endBasDt: basDt,
       },
-      timeout: 10000,
+      timeout: 5000,
     });
 
     const items = data?.response?.body?.items?.item;
@@ -102,7 +102,7 @@ export async function searchKrxStocks(
 
     const { data } = await axios.get(KRX_LISTING_URL, {
       params,
-      timeout: 10000,
+      timeout: 5000,
     });
 
     const items = data?.response?.body?.items?.item;

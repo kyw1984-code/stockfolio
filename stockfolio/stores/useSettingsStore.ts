@@ -22,7 +22,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   priceAlertsEnabled: true,
   dividendAlertsEnabled: true,
   isPro: false,
-  finnhubApiKey: '',
+  finnhubApiKey: 'd7cu5epr01qv03etmimgd7cu5epr01qv03etmin0',
 
   setCurrency: (currency) => set({ currency }),
   setLanguage: (language) => set({ language }),

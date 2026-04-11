@@ -29,21 +29,30 @@ export const useDividendStore = create<DividendState>((set, get) => ({
 
   fetchAllDividends: async (holdings) => {
     set({ isLoading: true });
-    const results = await Promise.allSettled(
-      holdings.map(async (h) => {
-        const info = await getDividendInfo(h.symbol, h.currentPrice);
-        return { symbol: h.symbol.toUpperCase(), info };
-      })
-    );
+    try {
+      // 3개씩 나눠서 순차 처리 (Finnhub rate limit 보호)
+      const BATCH_SIZE = 3;
+      const newData: Record<string, DividendInfo | null> = {};
 
-    const newData: Record<string, DividendInfo | null> = {};
-    results.forEach((r) => {
-      if (r.status === 'fulfilled') {
-        newData[r.value.symbol] = r.value.info;
+      for (let i = 0; i < holdings.length; i += BATCH_SIZE) {
+        const batch = holdings.slice(i, i + BATCH_SIZE);
+        const results = await Promise.allSettled(
+          batch.map(async (h) => {
+            const info = await getDividendInfo(h.symbol, h.currentPrice);
+            return { symbol: h.symbol.toUpperCase(), info };
+          })
+        );
+        results.forEach((r) => {
+          if (r.status === 'fulfilled') {
+            newData[r.value.symbol] = r.value.info;
+          }
+        });
       }
-    });
 
-    set({ dividendData: newData, isLoading: false });
+      set({ dividendData: newData, isLoading: false });
+    } catch {
+      set({ isLoading: false });
+    }
   },
 
   setMonthlyGoal: (goal) => set({ monthlyGoal: goal }),
