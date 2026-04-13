@@ -1,7 +1,7 @@
 import axios from 'axios';
+import Constants from 'expo-constants';
 
-// Finnhub API key
-const API_KEY = 'd7cu5epr01qv03etmimgd7cu5epr01qv03etmin0';
+const API_KEY = Constants.expoConfig?.extra?.finnhubApiKey || '';
 const BASE_URL = 'https://finnhub.io/api/v1';
 
 const api = axios.create({
@@ -68,10 +68,14 @@ export async function getDividends(
   from: string,
   to: string
 ): Promise<DividendData[]> {
-  const { data } = await api.get<DividendData[]>('/stock/dividend', {
-    params: { symbol: symbol.toUpperCase(), from, to },
-  });
-  return data || [];
+  try {
+    const { data } = await api.get<DividendData[]>('/stock/dividend', {
+      params: { symbol: symbol.toUpperCase(), from, to },
+    });
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
 }
 
 export async function getCompanyProfile(
@@ -81,6 +85,25 @@ export async function getCompanyProfile(
     params: { symbol: symbol.toUpperCase() },
   });
   return data;
+}
+
+export interface BasicFinancials {
+  metric: {
+    dividendPerShareAnnual?: number;
+    dividendYieldIndicatedAnnual?: number;
+    [key: string]: number | undefined;
+  };
+}
+
+export async function getBasicFinancials(symbol: string): Promise<BasicFinancials | null> {
+  try {
+    const { data } = await api.get<BasicFinancials>('/stock/metric', {
+      params: { symbol: symbol.toUpperCase(), metric: 'all' },
+    });
+    return data || null;
+  } catch {
+    return null;
+  }
 }
 
 export function setApiKey(key: string) {

@@ -5,22 +5,27 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Lock } from 'lucide-react-native';
+import { useAppTranslation } from '../../utils/useAppTranslation';
 import {
   calculateCompoundInterest,
   calculateDividendGoal,
 } from '../../utils/calculations';
 import { formatCurrency } from '../../utils/formatters';
 import { useSettingsStore } from '../../stores/useSettingsStore';
+import { useProGate } from '../../utils/useProGate';
 import TaxCalculatorComponent from '../../components/TaxCalculator';
 import DataSourceFooter from '../../components/DataSourceFooter';
+import AdBanner from '../../components/AdBanner';
 
 type CalculatorType = 'compound' | 'dca' | 'dividendGoal' | 'tax';
 
 export default function CalculatorScreen() {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
+  const { isPro, requirePro } = useProGate();
+  const insets = useSafeAreaInsets();
   const [activeCalc, setActiveCalc] = useState<CalculatorType>('compound');
 
   // Compound
@@ -67,7 +72,6 @@ export default function CalculatorScreen() {
     const start = parseFloat(dcaStart) || 100;
     const end = parseFloat(dcaEnd) || 100;
     const totalInvested = m * p;
-    // Simulate linear price movement
     let totalShares = 0;
     for (let i = 0; i < p; i++) {
       const price = start + ((end - start) * i) / Math.max(p - 1, 1);
@@ -93,85 +97,71 @@ export default function CalculatorScreen() {
   const { language } = useSettingsStore();
   const isKo = language === 'ko';
 
-  const tabs: { key: CalculatorType; label: string }[] = [
-    { key: 'compound', label: t('calculator.compound') },
-    { key: 'dca', label: t('calculator.dca') },
-    { key: 'dividendGoal', label: t('calculator.dividendGoal') },
-    { key: 'tax', label: isKo ? '세금 계산기' : 'Tax Calculator' },
+  const tabs: { key: CalculatorType; label: string; proOnly: boolean }[] = [
+    { key: 'compound', label: t('calculator.compound'), proOnly: false },
+    { key: 'dca', label: t('calculator.dca'), proOnly: false },
+    { key: 'dividendGoal', label: t('calculator.dividendGoal'), proOnly: true },
+    { key: 'tax', label: t('calculator.tax'), proOnly: true },
   ];
 
+  const handleTabPress = (tab: { key: CalculatorType; proOnly: boolean }) => {
+    if (tab.proOnly && !isPro) {
+      requirePro();
+      return;
+    }
+    setActiveCalc(tab.key);
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView className="flex-1 bg-slate-50 dark:bg-slate-950" showsVerticalScrollIndicator={false}>
       {/* Tab Selector */}
-      <View style={styles.tabRow}>
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab.key}
-            style={[
-              styles.tab,
-              activeCalc === tab.key && styles.tabActive,
-            ]}
-            onPress={() => setActiveCalc(tab.key)}
-          >
-            <Text
-              style={[
-                styles.tabText,
-                activeCalc === tab.key && styles.tabTextActive,
-              ]}
-            >
-              {tab.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+      <View className="px-5" style={{ paddingTop: insets.top + 16 }}>
+        <Text className="text-slate-900 dark:text-white text-2xl font-bold mb-6">{t('calculator.title')}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-6">
+          <View className="flex-row space-x-2">
+            {tabs.map((tab) => {
+              const locked = tab.proOnly && !isPro;
+              const active = activeCalc === tab.key;
+              return (
+                <TouchableOpacity
+                  key={tab.key}
+                  onPress={() => handleTabPress(tab)}
+                  className={`flex-row items-center px-5 py-2.5 rounded-full border ${active ? 'bg-sky-500 border-sky-500' : locked ? 'bg-white dark:bg-slate-900 border-amber-400/60 dark:border-amber-500/40' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800'}`}
+                >
+                  {locked && (
+                    <Lock size={11} color="#F59E0B" style={{ marginRight: 6 }} />
+                  )}
+                  <Text className={`text-xs font-bold ${active ? 'text-white' : locked ? 'text-amber-500 dark:text-amber-400' : 'text-slate-500'}`}>
+                    {tab.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
 
       {/* Compound Interest Calculator */}
       {activeCalc === 'compound' && (
-        <View style={styles.card}>
-          <InputField
-            label={t('calculator.initialInvestment')}
-            value={principal}
-            onChangeText={setPrincipal}
-            prefix="$"
-          />
-          <InputField
-            label={t('calculator.monthlyContribution')}
-            value={monthly}
-            onChangeText={setMonthly}
-            prefix="$"
-          />
-          <InputField
-            label={t('calculator.annualReturn')}
-            value={rate}
-            onChangeText={setRate}
-            suffix="%"
-          />
-          <InputField
-            label={t('calculator.years')}
-            value={years}
-            onChangeText={setYears}
-          />
-          <TouchableOpacity style={styles.calcButton} onPress={calculateCompound}>
-            <Text style={styles.calcButtonText}>{t('calculator.calculate')}</Text>
+        <View className="bg-white dark:bg-slate-900 mx-5 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none">
+          <InputField label={t('calculator.initialInvestment')} value={principal} onChangeText={setPrincipal} prefix="$" />
+          <InputField label={t('calculator.monthlyContribution')} value={monthly} onChangeText={setMonthly} prefix="$" />
+          <InputField label={t('calculator.annualReturn')} value={rate} onChangeText={setRate} suffix="%" />
+          <InputField label={t('calculator.years')} value={years} onChangeText={setYears} />
+
+          <TouchableOpacity
+            className="bg-sky-500 py-4 rounded-2xl items-center mt-4 shadow-lg shadow-sky-500/30"
+            onPress={calculateCompound}
+          >
+            <Text className="text-white font-bold text-base">{t('calculator.calculate')}</Text>
           </TouchableOpacity>
 
           {compoundResult && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultTitle}>{t('calculator.result')}</Text>
-              <ResultRow
-                label={t('calculator.finalValue')}
-                value={formatCurrency(compoundResult.finalValue)}
-                highlight
-              />
-              <ResultRow
-                label={t('calculator.totalInvested')}
-                value={formatCurrency(compoundResult.totalInvested)}
-              />
-              <ResultRow
-                label={t('calculator.totalReturn')}
-                value={formatCurrency(compoundResult.totalReturn)}
-                color="#34C759"
-              />
+            <View className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+              <Text className="text-slate-900 dark:text-white font-bold text-lg mb-4">{t('calculator.result')}</Text>
+              <ResultRow label={t('calculator.finalValue')} value={formatCurrency(compoundResult.finalValue)} highlight />
+              <ResultRow label={t('calculator.totalInvested')} value={formatCurrency(compoundResult.totalInvested)} />
+              <ResultRow label={t('calculator.totalReturn')} value={formatCurrency(compoundResult.totalReturn)} isProfit />
             </View>
           )}
         </View>
@@ -179,54 +169,26 @@ export default function CalculatorScreen() {
 
       {/* DCA Calculator */}
       {activeCalc === 'dca' && (
-        <View style={styles.card}>
-          <InputField
-            label={t('calculator.monthlyInvestment')}
-            value={dcaMonthly}
-            onChangeText={setDcaMonthly}
-            prefix="$"
-          />
-          <InputField
-            label={t('calculator.periods')}
-            value={dcaPeriods}
-            onChangeText={setDcaPeriods}
-          />
-          <InputField
-            label="Start Price"
-            value={dcaStart}
-            onChangeText={setDcaStart}
-            prefix="$"
-          />
-          <InputField
-            label={t('calculator.targetPrice')}
-            value={dcaEnd}
-            onChangeText={setDcaEnd}
-            prefix="$"
-          />
-          <TouchableOpacity style={styles.calcButton} onPress={calculateDca}>
-            <Text style={styles.calcButtonText}>{t('calculator.calculate')}</Text>
+        <View className="bg-white dark:bg-slate-900 mx-5 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none">
+          <InputField label={t('calculator.monthlyInvestment')} value={dcaMonthly} onChangeText={setDcaMonthly} prefix="$" />
+          <InputField label={t('calculator.periods')} value={dcaPeriods} onChangeText={setDcaPeriods} />
+          <InputField label={t('calculator.startPrice')} value={dcaStart} onChangeText={setDcaStart} prefix="$" />
+          <InputField label={t('calculator.targetPrice')} value={dcaEnd} onChangeText={setDcaEnd} prefix="$" />
+
+          <TouchableOpacity
+            className="bg-sky-500 py-4 rounded-2xl items-center mt-4 shadow-lg shadow-sky-500/30"
+            onPress={calculateDca}
+          >
+            <Text className="text-white font-bold text-base">{t('calculator.calculate')}</Text>
           </TouchableOpacity>
 
           {dcaResult && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultTitle}>{t('calculator.result')}</Text>
-              <ResultRow
-                label={t('calculator.avgCost')}
-                value={formatCurrency(dcaResult.avgCost)}
-              />
-              <ResultRow
-                label={t('calculator.totalShares')}
-                value={dcaResult.totalShares.toFixed(2)}
-              />
-              <ResultRow
-                label={t('calculator.totalInvested')}
-                value={formatCurrency(dcaResult.totalInvested)}
-              />
-              <ResultRow
-                label={t('calculator.finalValue')}
-                value={formatCurrency(dcaResult.finalValue)}
-                highlight
-              />
+            <View className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+              <Text className="text-slate-900 dark:text-white font-bold text-lg mb-4">{t('calculator.result')}</Text>
+              <ResultRow label={t('calculator.avgCost')} value={formatCurrency(dcaResult.avgCost)} />
+              <ResultRow label={t('calculator.totalShares')} value={dcaResult.totalShares.toFixed(2)} />
+              <ResultRow label={t('calculator.totalInvested')} value={formatCurrency(dcaResult.totalInvested)} />
+              <ResultRow label={t('calculator.finalValue')} value={formatCurrency(dcaResult.finalValue)} highlight />
             </View>
           )}
         </View>
@@ -234,175 +196,70 @@ export default function CalculatorScreen() {
 
       {/* Dividend Goal Calculator */}
       {activeCalc === 'dividendGoal' && (
-        <View style={styles.card}>
-          <InputField
-            label={t('calculator.targetMonthly')}
-            value={targetMonthly}
-            onChangeText={setTargetMonthly}
-            prefix="$"
-          />
-          <InputField
-            label={t('calculator.avgYield')}
-            value={avgYield}
-            onChangeText={setAvgYield}
-            suffix="%"
-          />
-          <TouchableOpacity style={styles.calcButton} onPress={calculateDivGoal}>
-            <Text style={styles.calcButtonText}>{t('calculator.calculate')}</Text>
+        <View className="bg-white dark:bg-slate-900 mx-5 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none">
+          <InputField label={t('calculator.targetMonthly')} value={targetMonthly} onChangeText={setTargetMonthly} prefix="$" />
+          <InputField label={t('calculator.avgYield')} value={avgYield} onChangeText={setAvgYield} suffix="%" />
+
+          <TouchableOpacity
+            className="bg-sky-500 py-4 rounded-2xl items-center mt-4 shadow-lg shadow-sky-500/30"
+            onPress={calculateDivGoal}
+          >
+            <Text className="text-white font-bold text-base">{t('calculator.calculate')}</Text>
           </TouchableOpacity>
 
           {dividendResult !== null && (
-            <View style={styles.resultCard}>
-              <Text style={styles.resultTitle}>{t('calculator.result')}</Text>
-              <ResultRow
-                label={t('calculator.requiredInvestment')}
-                value={formatCurrency(dividendResult)}
-                highlight
-              />
-              <ResultRow
-                label={t('calculator.targetMonthly')}
-                value={formatCurrency(parseFloat(targetMonthly) || 0)}
-              />
+            <View className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+              <Text className="text-slate-900 dark:text-white font-bold text-lg mb-4">{t('calculator.result')}</Text>
+              <ResultRow label={t('calculator.requiredInvestment')} value={formatCurrency(dividendResult)} highlight />
+              <ResultRow label={t('calculator.targetMonthly')} value={formatCurrency(parseFloat(targetMonthly) || 0)} />
             </View>
           )}
         </View>
       )}
 
       {/* Tax Calculator */}
-      {activeCalc === 'tax' && <TaxCalculatorComponent />}
+      {activeCalc === 'tax' && (
+        <View className="mx-5">
+          <TaxCalculatorComponent />
+        </View>
+      )}
 
-      <DataSourceFooter showKorean={isKo} />
-      <View style={{ height: 40 }} />
+      <View className="mt-10">
+        <AdBanner />
+        <DataSourceFooter showKorean={isKo} />
+      </View>
+      <View className="h-20" />
     </ScrollView>
   );
 }
 
-function InputField({
-  label,
-  value,
-  onChangeText,
-  prefix,
-  suffix,
-}: {
-  label: string;
-  value: string;
-  onChangeText: (t: string) => void;
-  prefix?: string;
-  suffix?: string;
-}) {
+function InputField({ label, value, onChangeText, prefix, suffix }: any) {
   return (
-    <View style={styles.inputGroup}>
-      <Text style={styles.inputLabel}>{label}</Text>
-      <View style={styles.inputRow}>
-        {prefix && <Text style={styles.inputPrefix}>{prefix}</Text>}
+    <View className="mb-5">
+      <Text className="text-slate-500 dark:text-slate-400 text-[11px] font-bold uppercase tracking-wider mb-2 ml-1">{label}</Text>
+      <View className="flex-row items-center bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl px-4 h-14">
+        {prefix && <Text className="text-slate-400 dark:text-slate-500 font-bold mr-2">{prefix}</Text>}
         <TextInput
-          style={styles.input}
+          className="flex-1 text-slate-900 dark:text-white font-bold text-base h-full"
           value={value}
           onChangeText={onChangeText}
           keyboardType="numeric"
           placeholder="0"
-          placeholderTextColor="#C7C7CC"
+          placeholderTextColor="#94A3B8"
         />
-        {suffix && <Text style={styles.inputSuffix}>{suffix}</Text>}
+        {suffix && <Text className="text-slate-400 dark:text-slate-500 font-bold ml-2">{suffix}</Text>}
       </View>
     </View>
   );
 }
 
-function ResultRow({
-  label,
-  value,
-  highlight,
-  color,
-}: {
-  label: string;
-  value: string;
-  highlight?: boolean;
-  color?: string;
-}) {
+function ResultRow({ label, value, highlight, isProfit }: any) {
   return (
-    <View style={styles.resultRow}>
-      <Text style={styles.resultLabel}>{label}</Text>
-      <Text
-        style={[
-          styles.resultValue,
-          highlight && { fontSize: 20, fontWeight: '700' },
-          color ? { color } : undefined,
-        ]}
-      >
+    <View className="flex-row justify-between items-center py-3">
+      <Text className="text-slate-500 dark:text-slate-400 text-sm">{label}</Text>
+      <Text className={`font-bold ${highlight ? 'text-slate-900 dark:text-white text-xl' : isProfit ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-600 dark:text-slate-300'}`}>
         {value}
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
-  tabRow: {
-    flexDirection: 'row',
-    padding: 16,
-    gap: 8,
-  },
-  tab: {
-    flex: 1,
-    paddingVertical: 10,
-    borderRadius: 8,
-    backgroundColor: '#E5E5EA',
-    alignItems: 'center',
-  },
-  tabActive: { backgroundColor: '#007AFF' },
-  tabText: { fontSize: 12, fontWeight: '600', color: '#8E8E93' },
-  tabTextActive: { color: '#FFFFFF' },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    margin: 16,
-    marginTop: 0,
-    padding: 20,
-  },
-  inputGroup: { marginBottom: 16 },
-  inputLabel: { fontSize: 13, color: '#8E8E93', marginBottom: 6 },
-  inputRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E5E5EA',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-  },
-  inputPrefix: { fontSize: 16, color: '#8E8E93', marginRight: 4 },
-  inputSuffix: { fontSize: 16, color: '#8E8E93', marginLeft: 4 },
-  input: {
-    flex: 1,
-    height: 44,
-    fontSize: 16,
-    color: '#000',
-  },
-  calcButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  calcButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
-  resultCard: {
-    marginTop: 20,
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#E5E5EA',
-  },
-  resultTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginBottom: 12,
-    color: '#000',
-  },
-  resultRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 8,
-  },
-  resultLabel: { fontSize: 14, color: '#8E8E93' },
-  resultValue: { fontSize: 15, fontWeight: '600', color: '#000' },
-});

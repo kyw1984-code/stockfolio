@@ -1,4 +1,4 @@
-import { getDividends } from './finnhubApi';
+import { getDividends, getBasicFinancials } from './finnhubApi';
 
 export interface DividendInfo {
   symbol: string;
@@ -24,22 +24,35 @@ export async function getDividendInfo(
 
     const dividends = await getDividends(symbol, from, to);
 
-    if (!dividends || dividends.length === 0) {
-      return null;
+    if (dividends && dividends.length > 0) {
+      const frequency = dividends.length;
+      const totalAnnualDiv = dividends.reduce((sum, d) => sum + d.amount, 0);
+      const latestDiv = dividends[dividends.length - 1];
+      return {
+        symbol,
+        annualDividend: totalAnnualDiv,
+        dividendPerShare: latestDiv.amount,
+        frequency,
+        exDate: latestDiv.date,
+        payDate: latestDiv.payDate,
+        yieldPercent: currentPrice > 0 ? (totalAnnualDiv / currentPrice) * 100 : 0,
+      };
     }
 
-    const frequency = dividends.length;
-    const totalAnnualDiv = dividends.reduce((sum, d) => sum + d.amount, 0);
-    const latestDiv = dividends[dividends.length - 1];
+    // 폴백: /stock/metric의 연간 배당 데이터 사용
+    const fin = await getBasicFinancials(symbol);
+    const dps = fin?.metric?.dividendPerShareAnnual;
+    const yieldPct = fin?.metric?.dividendYieldIndicatedAnnual;
+    if (!dps || dps === 0) return null;
 
     return {
       symbol,
-      annualDividend: totalAnnualDiv,
-      dividendPerShare: latestDiv.amount,
-      frequency,
-      exDate: latestDiv.date,
-      payDate: latestDiv.payDate,
-      yieldPercent: currentPrice > 0 ? (totalAnnualDiv / currentPrice) * 100 : 0,
+      annualDividend: dps,
+      dividendPerShare: dps / 4,
+      frequency: 4,
+      exDate: '',
+      payDate: '',
+      yieldPercent: yieldPct || (currentPrice > 0 ? (dps / currentPrice) * 100 : 0),
     };
   } catch {
     return null;

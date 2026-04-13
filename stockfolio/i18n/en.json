@@ -18,7 +18,14 @@
     "marketValue": "Market Value",
     "gain": "Gain/Loss",
     "weight": "Weight",
-    "sector": "Sector"
+    "sector": "Sector",
+    "netWorthBalance": "Net Worth Balance",
+    "sessionProfit": "Session Profit",
+    "holdingsTitle": "Your Holdings",
+    "managedAssets": "Managed Assets",
+    "exchangeRate": "Exchange Rate",
+    "krStocks": "KR Stocks",
+    "usStocks": "US Stocks"
   },
   "dividends": {
     "title": "Dividends",
@@ -33,7 +40,17 @@
     "progress": "Progress",
     "needed": "Additional Investment Needed",
     "noDividends": "No dividend data",
-    "noDividendsDesc": "Add dividend-paying stocks to see projections"
+    "noDividendsDesc": "Add dividend-paying stocks to see projections",
+    "analytics": "Analytics",
+    "annualPassiveIncome": "Annual Passive Income",
+    "fiscalYearNote": "Estimated for current fiscal year",
+    "scheduleTitle": "Dividend Schedule",
+    "annual": "ANNUAL",
+    "financialFreedom": "Financial Freedom",
+    "upcomingPayouts": "Upcoming Payouts",
+    "nextDividends": "Next Dividends",
+    "perShare": "/ SH",
+    "exDateLabel": "Ex-Date"
   },
   "calculator": {
     "title": "Calculator",
@@ -44,6 +61,8 @@
     "monthlyContribution": "Monthly Contribution",
     "annualReturn": "Annual Return (%)",
     "years": "Investment Period (Years)",
+    "tax": "Tax Calculator",
+    "startPrice": "Start Price",
     "calculate": "Calculate",
     "result": "Result",
     "totalInvested": "Total Invested",
@@ -71,7 +90,12 @@
     "upgradePro": "Upgrade to Pro",
     "dataSources": "Data Sources",
     "about": "About",
-    "version": "Version"
+    "version": "Version",
+    "general": "General",
+    "resources": "Resources",
+    "darkMode": "Dark Mode",
+    "proMember": "Pro Member",
+    "eliteStatus": "Elite Status"
   },
   "addStock": {
     "title": "Add Stock",
@@ -81,6 +105,19 @@
     "add": "Add to Portfolio",
     "searching": "Searching...",
     "noResults": "No results found"
+  },
+  "stockDetail": {
+    "holdings": "Holdings",
+    "dividendPerShare": "Dividend/Share",
+    "yield": "Yield",
+    "frequency": "Frequency",
+    "exDate": "Ex-Date",
+    "payDate": "Pay Date",
+    "notFound": "Stock not found",
+    "deleteTitle": "Delete Stock",
+    "deleteMsg": "Remove {symbol} from portfolio?",
+    "noTransactions": "No transactions recorded",
+    "addTransaction": "+ Add"
   },
   "transaction": {
     "title": "Add Transaction",
@@ -92,7 +129,9 @@
     "price": "Price per Share",
     "amount": "Amount",
     "save": "Save Transaction",
-    "history": "Transaction History"
+    "history": "Transaction History",
+    "ticker": "Ticker",
+    "total": "Total"
   },
   "common": {
     "save": "Save",
@@ -102,6 +141,33 @@
     "loading": "Loading...",
     "error": "Error",
     "retry": "Retry",
-    "currency": "$"
+    "currency": "$",
+    "filter": "Filter",
+    "calendar": "Calendar",
+    "current": "Current"
+  },
+  "pro": {
+    "lockedTitle": "Pro Feature",
+    "lockedMsg": "Upgrade to Pro to unlock this feature.",
+    "upgrade": "Upgrade",
+    "lockedCard": "Pro Only",
+    "unlockCta": "Unlock with Pro",
+    "holdingsLimitTitle": "Free Plan Limit Reached",
+    "holdingsLimitMsg": "Free plan allows up to 5 stocks. Upgrade to Pro for unlimited holdings.",
+    "benefitsTitle": "What you get with Pro",
+    "benefits": {
+      "unlimitedStocks": "Unlimited stock holdings",
+      "taxCalc": "Korean stock tax calculator",
+      "dividendGoal": "Dividend goal tracker & Yield on Cost",
+      "countryBreakdown": "Country diversification analysis",
+      "dividendChart": "Monthly dividend schedule chart"
+    },
+    "feature": {
+      "countryBreakdown": "Country Diversification",
+      "yoc": "Yield on Cost",
+      "dividendSchedule": "Dividend Schedule",
+      "dividendGoal": "Dividend Goal",
+      "taxCalc": "Tax Calculator"
+    }
   }
 }

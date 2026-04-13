@@ -1,5 +1,4 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { useSettingsStore } from '../stores/useSettingsStore';
 
 interface DataSourceFooterProps {
@@ -8,7 +7,7 @@ interface DataSourceFooterProps {
 
 export default function DataSourceFooter({ showKorean }: DataSourceFooterProps) {
   const { language } = useSettingsStore();
-  const isKo = language === 'ko' || showKorean;
+  const isKo = language === 'ko';
 
   return (
     <View style={styles.container}>
@@ -16,13 +15,17 @@ export default function DataSourceFooter({ showKorean }: DataSourceFooterProps) 
       <Text style={styles.title}>
         {isKo ? '📌 데이터 출처' : '📌 Data Sources'}
       </Text>
-      {isKo && (
+      {showKorean && (
         <>
           <Text style={styles.source}>
-            • 국내 주식시세: 금융위원회 (공공데이터포털)
+            {isKo
+              ? '• 국내 주식시세: 금융위원회 (공공데이터포털)'
+              : '• KR Stocks: Financial Services Commission (data.go.kr)'}
           </Text>
           <Text style={styles.source}>
-            • 환율 정보: 한국은행 경제통계시스템(ECOS)
+            {isKo
+              ? '• 환율 정보: 한국은행 경제통계시스템(ECOS)'
+              : '• Exchange Rate: Bank of Korea ECOS'}
           </Text>
         </>
       )}

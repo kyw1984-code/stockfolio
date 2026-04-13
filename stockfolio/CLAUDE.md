@@ -75,8 +75,9 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
 
 ### 코딩 컨벤션
 ```typescript
-// ✅ 컴포넌트 — 함수형 + TypeScript + NativeWind
-import { View, Text } from 'react-native';
+// ✅ 컴포넌트 — 함수형 + TypeScript
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 interface Props {
   title: string;
@@ -85,20 +86,23 @@ interface Props {
 
 export default function StockCard({ title, value }: Props) {
   return (
-    <View className="p-4 rounded-xl bg-white dark:bg-slate-900">
-      <Text className="text-sm text-slate-500 dark:text-slate-400">{title}</Text>
-      <Text className="text-2xl font-bold text-slate-900 dark:text-white">
-        {value.toLocaleString()}원
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.value}>{value.toLocaleString()}원</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { padding: 16, borderRadius: 12 },
+  title: { fontSize: 14, color: '#888' },
+  value: { fontSize: 24, fontWeight: 'bold' },
+});
 ```
 
 **필수 규칙:**
 - `any` 타입 사용 금지 → 반드시 interface/type 정의
-- 스타일은 NativeWind `className` 우선, `StyleSheet.create()`는 NativeWind로 표현 불가능한 경우에만 사용
-- 서드파티 네이티브 컴포넌트(`LinearGradient` 등) 레이아웃은 `style` prop 직접 전달
+- 인라인 스타일 금지 → `StyleSheet.create()` 사용
 - 하드코딩된 문자열 금지 → `constants/`에서 관리
 - 컴포넌트 파일 하나에 하나의 export default
 - Expo Router 규칙: `app/` 내 파일명 = URL 경로

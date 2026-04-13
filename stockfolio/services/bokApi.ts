@@ -9,8 +9,9 @@
  * 3. 오인 금지: 한국은행 후원/특수관계 암시 금지
  */
 import axios from 'axios';
+import Constants from 'expo-constants';
 
-let API_KEY = 'LU2ZDQSMFY5M4VY4WCZB';
+let API_KEY = Constants.expoConfig?.extra?.bokApiKey || '';
 
 const BASE_URL = 'https://ecos.bok.or.kr/api';
 

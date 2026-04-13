@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "Bash(node -e \"try { const p = require\\('./node_modules/expo/node_modules/@expo/cli/package.json'\\); console.log\\('exports:', JSON.stringify\\(p.exports\\).slice\\(0,200\\)\\); } catch\\(e\\) { console.error\\(e.message\\); }\")",
-      "Bash(node -e \"const p = require\\('./node_modules/expo/node_modules/@expo/cli/package.json'\\); console.log\\(p.version, p.main, p.bin\\)\")"
+      "Bash(node -e \"const p = require\\('./node_modules/expo/node_modules/@expo/cli/package.json'\\); console.log\\(p.version, p.main, p.bin\\)\")",
+      "Bash(git remote:*)",
+      "Bash(node -e ':*)",
+      "Bash(npx expo:*)",
+      "Bash(pkill -f \"expo start\")",
+      "Bash(pkill -f \"node.*expo\")",
+      "Bash(npm install:*)",
+      "Bash(xcodebuild -workspace StockFolio.xcworkspace -configuration Debug -scheme StockFolio -destination 'platform=iOS Simulator,name=iPhone 15 Pro' build)",
+      "Bash(xcodebuild -workspace StockFolio.xcworkspace -configuration Debug -scheme StockFolio -destination 'id=EF42BC95-6909-4FC7-AB67-7EAB2BB31304' build)"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,21 @@ import {
   Alert,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { usePortfolioStore } from '../../stores/usePortfolioStore';
+import { useAppTranslation } from '../../utils/useAppTranslation';
+import { usePortfolioStore, StockHolding } from '../../stores/usePortfolioStore';
 import { useDividendStore } from '../../stores/useDividendStore';
+import { useSettingsStore } from '../../stores/useSettingsStore';
+import { useExchangeStore } from '../../stores/useExchangeStore';
 import { formatCurrency, formatPercent } from '../../utils/formatters';
 
 export default function StockDetailScreen() {
   const { ticker } = useLocalSearchParams<{ ticker: string }>();
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const router = useRouter();
   const { holdings, transactions, removeHolding } = usePortfolioStore();
   const { dividendData, fetchDividendInfo } = useDividendStore();
+  const { currency } = useSettingsStore();
+  const { convertToKrw } = useExchangeStore();
 
   const holding = holdings.find(
     (h) => h.symbol === ticker?.toUpperCase()
@@ -32,17 +36,25 @@ export default function StockDetailScreen() {
 
   useEffect(() => {
     if (holding && !divInfo) {
-      fetchDividendInfo(holding.symbol, holding.currentPrice);
+      fetchDividendInfo(holding.symbol, holding.currentPrice, holding.market, holding.name);
     }
   }, [holding?.symbol]);
 
   if (!holding) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Stock not found</Text>
+        <Text style={styles.errorText}>{t('stockDetail.notFound')}</Text>
       </View>
     );
   }
+
+  const showKrw = currency === 'KRW';
+
+  const formatPrice = (h: StockHolding, value: number) => {
+    if (h.market === 'KR') return formatCurrency(value, 'KRW');
+    if (showKrw) return formatCurrency(convertToKrw(value), 'KRW');
+    return formatCurrency(value);
+  };
 
   const marketValue = holding.currentPrice * holding.shares;
   const totalCost = holding.avgCost * holding.shares;
@@ -54,8 +66,8 @@ export default function StockDetailScreen() {
 
   const handleDelete = () => {
     Alert.alert(
-      'Delete Stock',
-      `Remove ${holding.symbol} from portfolio?`,
+      t('stockDetail.deleteTitle'),
+      t('stockDetail.deleteMsg').replace('{symbol}', holding.symbol),
       [
         { text: t('common.cancel'), style: 'cancel' },
         {
@@ -76,7 +88,7 @@ export default function StockDetailScreen() {
       <View style={styles.header}>
         <Text style={styles.symbol}>{holding.symbol}</Text>
         <Text style={styles.name}>{holding.name}</Text>
-        <Text style={styles.price}>{formatCurrency(holding.currentPrice)}</Text>
+        <Text style={styles.price}>{formatPrice(holding, holding.currentPrice)}</Text>
         <Text
           style={[
             styles.change,
@@ -88,7 +100,7 @@ export default function StockDetailScreen() {
             },
           ]}
         >
-          {formatCurrency(holding.currentPrice - holding.previousClose)} (
+          {formatPrice(holding, holding.currentPrice - holding.previousClose)} (
           {formatPercent(
             holding.previousClose > 0
               ? ((holding.currentPrice - holding.previousClose) /
@@ -102,27 +114,27 @@ export default function StockDetailScreen() {
 
       {/* Holdings Info */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Holdings</Text>
+        <Text style={styles.sectionTitle}>{t('stockDetail.holdings')}</Text>
         <InfoRow
           label={t('portfolio.shares')}
           value={holding.shares.toString()}
         />
         <InfoRow
           label={t('portfolio.avgCost')}
-          value={formatCurrency(holding.avgCost)}
+          value={formatPrice(holding, holding.avgCost)}
         />
         <InfoRow
           label={t('portfolio.marketValue')}
-          value={formatCurrency(marketValue)}
+          value={formatPrice(holding, marketValue)}
         />
         <InfoRow
           label={t('portfolio.gain')}
-          value={`${formatCurrency(gain)} (${formatPercent(gainPercent)})`}
+          value={`${formatPrice(holding, gain)} (${formatPercent(gainPercent)})`}
           color={gain >= 0 ? '#34C759' : '#FF3B30'}
         />
         <InfoRow
           label={t('portfolio.todayChange')}
-          value={formatCurrency(dayChange)}
+          value={formatPrice(holding, dayChange)}
           color={dayChange >= 0 ? '#34C759' : '#FF3B30'}
         />
         <InfoRow label={t('portfolio.sector')} value={holding.sector} />
@@ -133,20 +145,20 @@ export default function StockDetailScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('dividends.title')}</Text>
           <InfoRow
-            label="Dividend/Share"
-            value={formatCurrency(divInfo.dividendPerShare)}
+            label={t('stockDetail.dividendPerShare')}
+            value={formatPrice(holding, divInfo.dividendPerShare)}
           />
           <InfoRow
             label={t('dividends.annualDividend')}
-            value={formatCurrency(divInfo.annualDividend * holding.shares)}
+            value={formatPrice(holding, divInfo.annualDividend * holding.shares)}
           />
           <InfoRow
-            label="Yield"
+            label={t('stockDetail.yield')}
             value={`${divInfo.yieldPercent.toFixed(2)}%`}
             color="#34C759"
           />
-          <InfoRow label="Frequency" value={`${divInfo.frequency}x/year`} />
-          <InfoRow label="Ex-Date" value={divInfo.exDate} />
+          <InfoRow label={t('stockDetail.frequency')} value={`${divInfo.frequency}x/year`} />
+          <InfoRow label={t('stockDetail.exDate')} value={divInfo.exDate} />
         </View>
       )}
 
@@ -159,11 +171,11 @@ export default function StockDetailScreen() {
               router.push(`/add-transaction?symbol=${holding.symbol}`)
             }
           >
-            <Text style={styles.addLink}>+ Add</Text>
+            <Text style={styles.addLink}>{t('stockDetail.addTransaction')}</Text>
           </TouchableOpacity>
         </View>
         {stockTxs.length === 0 ? (
-          <Text style={styles.emptyTx}>No transactions recorded</Text>
+          <Text style={styles.emptyTx}>{t('stockDetail.noTransactions')}</Text>
         ) : (
           stockTxs
             .slice()
@@ -193,11 +205,11 @@ export default function StockDetailScreen() {
                 <View style={{ alignItems: 'flex-end' }}>
                   {tx.type !== 'dividend' && (
                     <Text style={styles.txDetail}>
-                      {tx.shares} shares @ {formatCurrency(tx.price)}
+                      {tx.shares} shares @ {formatPrice(holding, tx.price)}
                     </Text>
                   )}
                   <Text style={styles.txAmount}>
-                    {formatCurrency(tx.amount)}
+                    {formatPrice(holding, tx.amount)}
                   </Text>
                 </View>
               </View>

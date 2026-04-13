@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getQuote } from '../services/finnhubApi';
 import { getKrxStockPrice } from '../services/publicDataApi';
 import { getCachedPrice, setCachedPrice } from '../services/priceCache';
@@ -49,7 +51,9 @@ interface PortfolioState {
   getUsHoldings: () => StockHolding[];
 }
 
-export const usePortfolioStore = create<PortfolioState>((set, get) => ({
+export const usePortfolioStore = create<PortfolioState>()(
+  persist(
+    (set, get) => ({
   holdings: [],
   transactions: [],
   isLoading: false,
@@ -143,7 +147,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
             }
 
             if (h.market === 'KR') {
-              const krData = await getKrxStockPrice(h.symbol);
+              const krData = await getKrxStockPrice(h.symbol, h.name);
               if (krData) {
                 const price = parseFloat(krData.clpr);
                 const change = parseFloat(krData.vs);
@@ -242,4 +246,16 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
 
   getKrHoldings: () => get().holdings.filter((h) => h.market === 'KR'),
   getUsHoldings: () => get().holdings.filter((h) => h.market === 'US'),
-}));
+    }),
+    {
+      name: 'portfolio-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+      // isLoading은 앱 시작 시 항상 false로 초기화
+      partialize: (state) => ({
+        holdings: state.holdings,
+        transactions: state.transactions,
+        lastUpdated: state.lastUpdated,
+      }),
+    }
+  )
+);

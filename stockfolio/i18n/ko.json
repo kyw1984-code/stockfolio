@@ -18,7 +18,14 @@
     "marketValue": "평가금액",
     "gain": "손익",
     "weight": "비중",
-    "sector": "섹터"
+    "sector": "섹터",
+    "netWorthBalance": "총 자산 잔액",
+    "sessionProfit": "오늘 수익",
+    "holdingsTitle": "보유 종목",
+    "managedAssets": "관리 자산",
+    "exchangeRate": "환율",
+    "krStocks": "국내 주식",
+    "usStocks": "해외 주식"
   },
   "dividends": {
     "title": "배당",
@@ -33,7 +40,17 @@
     "progress": "진행률",
     "needed": "추가 투자 필요액",
     "noDividends": "배당 데이터 없음",
-    "noDividendsDesc": "배당을 지급하는 종목을 추가하면 예상 배당이 표시됩니다"
+    "noDividendsDesc": "배당을 지급하는 종목을 추가하면 예상 배당이 표시됩니다",
+    "analytics": "분석",
+    "annualPassiveIncome": "연간 배당 수입",
+    "fiscalYearNote": "현재 회계연도 기준 예상치",
+    "scheduleTitle": "배당 일정",
+    "annual": "연간",
+    "financialFreedom": "재무 자유",
+    "upcomingPayouts": "다가오는 배당",
+    "nextDividends": "다음 배당",
+    "perShare": "/ 주",
+    "exDateLabel": "기준일"
   },
   "calculator": {
     "title": "계산기",
@@ -44,6 +61,8 @@
     "monthlyContribution": "월 적립금",
     "annualReturn": "연간 수익률 (%)",
     "years": "투자 기간 (년)",
+    "tax": "세금 계산기",
+    "startPrice": "시작 가격",
     "calculate": "계산하기",
     "result": "결과",
     "totalInvested": "총 투자금",
@@ -71,7 +90,12 @@
     "upgradePro": "Pro로 업그레이드",
     "dataSources": "데이터 출처",
     "about": "앱 정보",
-    "version": "버전"
+    "version": "버전",
+    "general": "일반",
+    "resources": "리소스",
+    "darkMode": "다크 모드",
+    "proMember": "Pro 멤버",
+    "eliteStatus": "프리미엄 혜택"
   },
   "addStock": {
     "title": "종목 추가",
@@ -81,6 +105,19 @@
     "add": "포트폴리오에 추가",
     "searching": "검색 중...",
     "noResults": "검색 결과가 없습니다"
+  },
+  "stockDetail": {
+    "holdings": "보유 현황",
+    "dividendPerShare": "주당 배당금",
+    "yield": "배당수익률",
+    "frequency": "배당 횟수",
+    "exDate": "배당 기준일",
+    "payDate": "배당 지급일",
+    "notFound": "종목을 찾을 수 없습니다",
+    "deleteTitle": "종목 삭제",
+    "deleteMsg": "{symbol}을(를) 포트폴리오에서 삭제하시겠습니까?",
+    "noTransactions": "거래 내역이 없습니다",
+    "addTransaction": "+ 추가"
   },
   "transaction": {
     "title": "거래 기록 추가",
@@ -92,7 +129,9 @@
     "price": "주당 가격",
     "amount": "금액",
     "save": "거래 저장",
-    "history": "거래 내역"
+    "history": "거래 내역",
+    "ticker": "종목코드",
+    "total": "합계"
   },
   "common": {
     "save": "저장",
@@ -102,6 +141,33 @@
     "loading": "로딩 중...",
     "error": "오류",
     "retry": "재시도",
-    "currency": "$"
+    "currency": "$",
+    "filter": "필터",
+    "calendar": "캘린더",
+    "current": "현재"
+  },
+  "pro": {
+    "lockedTitle": "Pro 전용 기능",
+    "lockedMsg": "Pro로 업그레이드하여 잠금을 해제하세요.",
+    "upgrade": "업그레이드",
+    "lockedCard": "Pro 전용",
+    "unlockCta": "Pro로 잠금 해제",
+    "holdingsLimitTitle": "무료 플랜 한도 도달",
+    "holdingsLimitMsg": "무료 플랜은 최대 5개 종목까지 추가할 수 있습니다. Pro로 업그레이드하면 무제한입니다.",
+    "benefitsTitle": "Pro 가입 시 제공되는 기능",
+    "benefits": {
+      "unlimitedStocks": "무제한 종목 추가",
+      "taxCalc": "한국 주식 세금 계산기",
+      "dividendGoal": "배당 목표 트래커 + 원가 대비 수익률",
+      "countryBreakdown": "국가별 분산 분석",
+      "dividendChart": "월별 배당 일정 차트"
+    },
+    "feature": {
+      "countryBreakdown": "국가별 분산 분석",
+      "yoc": "원가 대비 수익률",
+      "dividendSchedule": "배당 일정",
+      "dividendGoal": "배당 목표",
+      "taxCalc": "세금 계산기"
+    }
   }
 }

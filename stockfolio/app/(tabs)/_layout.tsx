@@ -1,45 +1,62 @@
 import { Tabs } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Text } from 'react-native';
+import { useEffect } from 'react';
+import { useAppTranslation } from '../../utils/useAppTranslation';
+import { View } from 'react-native';
+import { useColorScheme } from 'nativewind';
+import { LayoutDashboard, PieChart, Calculator, Settings as SettingsIcon } from 'lucide-react-native';
+import { useSettingsStore } from '../../stores/useSettingsStore';
 
-function TabIcon({ name, focused }: { name: string; focused: boolean }) {
-  const icons: Record<string, string> = {
-    portfolio: '📊',
-    dividends: '💰',
-    calculator: '🧮',
-    settings: '⚙️',
-  };
+function TabIcon({ name, focused, color, size }: { name: string; focused: boolean; color: string; size: number }) {
+  const Icon = {
+    portfolio: LayoutDashboard,
+    dividends: PieChart,
+    calculator: Calculator,
+    settings: SettingsIcon,
+  }[name] || LayoutDashboard;
+
   return (
-    <Text style={{ fontSize: focused ? 26 : 22, opacity: focused ? 1 : 0.5 }}>
-      {icons[name] || '📋'}
-    </Text>
+    <View className="items-center justify-center">
+      <Icon size={size} color={color} strokeWidth={focused ? 2.5 : 2} />
+    </View>
   );
 }
 
 export default function TabLayout() {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
+  const theme = useSettingsStore((s) => s.theme);
+  const { setColorScheme } = useColorScheme();
+
+  useEffect(() => {
+    setColorScheme(theme);
+  }, [theme]);
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: '#8E8E93',
+        headerShown: false,
+        tabBarActiveTintColor: '#38BDF8',
+        tabBarInactiveTintColor: '#64748B',
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
-          borderTopColor: '#E5E5EA',
-          paddingBottom: 4,
-          height: 56,
+          backgroundColor: '#020617',
+          borderTopColor: '#1E293B',
+          height: 64,
+          paddingBottom: 8,
+          paddingTop: 8,
+          borderTopWidth: 1,
         },
-        headerStyle: { backgroundColor: '#FFFFFF' },
-        headerTitleStyle: { fontWeight: '700', fontSize: 18 },
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '700',
+          marginTop: 2,
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: t('tabs.portfolio'),
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="portfolio" focused={focused} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon name="portfolio" focused={focused} color={color} size={size} />
           ),
         }}
       />
@@ -47,8 +64,8 @@ export default function TabLayout() {
         name="dividends"
         options={{
           title: t('tabs.dividends'),
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="dividends" focused={focused} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon name="dividends" focused={focused} color={color} size={size} />
           ),
         }}
       />
@@ -56,8 +73,8 @@ export default function TabLayout() {
         name="calculator"
         options={{
           title: t('tabs.calculator'),
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="calculator" focused={focused} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon name="calculator" focused={focused} color={color} size={size} />
           ),
         }}
       />
@@ -65,8 +82,8 @@ export default function TabLayout() {
         name="settings"
         options={{
           title: t('tabs.settings'),
-          tabBarIcon: ({ focused }) => (
-            <TabIcon name="settings" focused={focused} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon name="settings" focused={focused} color={color} size={size} />
           ),
         }}
       />

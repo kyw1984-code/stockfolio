@@ -9,33 +9,35 @@ import {
   Alert,
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { useTranslation } from 'react-i18next';
+import { useAppTranslation } from '../utils/useAppTranslation';
 import { usePortfolioStore } from '../stores/usePortfolioStore';
 
 type TxType = 'buy' | 'sell' | 'dividend';
 
 export default function AddTransactionScreen() {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const router = useRouter();
   const params = useLocalSearchParams<{ symbol?: string }>();
-  const { addTransaction, holdings, updateHolding } = usePortfolioStore();
+  const { addTransaction, holdings, updateHolding, removeHolding } = usePortfolioStore();
 
   const [txType, setTxType] = useState<TxType>('buy');
   const [symbol, setSymbol] = useState(params.symbol || '');
+  const holdingForSymbol = holdings.find((h) => h.symbol === symbol.toUpperCase().trim());
+  const currencySymbol = holdingForSymbol?.market === 'KR' ? '₩' : '$';
   const [sharesInput, setSharesInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
 
   const handleSave = () => {
     const sym = symbol.toUpperCase().trim();
     if (!sym) {
-      Alert.alert('Error', 'Please enter a ticker symbol');
+      Alert.alert(t('common.error'), t('transaction.ticker'));
       return;
     }
 
     if (txType === 'dividend') {
       const amount = parseFloat(priceInput);
       if (!amount || amount <= 0) {
-        Alert.alert('Error', 'Please enter dividend amount');
+        Alert.alert(t('common.error'), t('transaction.amount'));
         return;
       }
       addTransaction({
@@ -50,7 +52,7 @@ export default function AddTransactionScreen() {
       const shares = parseFloat(sharesInput);
       const price = parseFloat(priceInput);
       if (!shares || shares <= 0 || !price || price <= 0) {
-        Alert.alert('Error', 'Please enter valid shares and price');
+        Alert.alert(t('common.error'), t('transaction.shares'));
         return;
       }
 
@@ -69,7 +71,7 @@ export default function AddTransactionScreen() {
         if (holding) {
           const newShares = holding.shares - shares;
           if (newShares <= 0) {
-            // Remove holding handled elsewhere
+            removeHolding(sym);
           } else {
             updateHolding(sym, { shares: newShares });
           }
@@ -114,7 +116,7 @@ export default function AddTransactionScreen() {
 
         {/* Symbol */}
         <View style={styles.inputGroup}>
-          <Text style={styles.label}>Ticker</Text>
+          <Text style={styles.label}>{t('transaction.ticker')}</Text>
           <TextInput
             style={styles.input}
             value={symbol}
@@ -148,7 +150,7 @@ export default function AddTransactionScreen() {
               : t('transaction.price')}
           </Text>
           <View style={styles.priceRow}>
-            <Text style={styles.prefix}>$</Text>
+            <Text style={styles.prefix}>{currencySymbol}</Text>
             <TextInput
               style={[styles.input, { flex: 1, borderWidth: 0 }]}
               value={priceInput}
@@ -165,9 +167,9 @@ export default function AddTransactionScreen() {
           sharesInput &&
           priceInput && (
             <View style={styles.totalRow}>
-              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalLabel}>{t('transaction.total')}</Text>
               <Text style={styles.totalValue}>
-                $
+                {currencySymbol}
                 {(
                   (parseFloat(sharesInput) || 0) *
                   (parseFloat(priceInput) || 0)

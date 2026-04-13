@@ -12,11 +12,13 @@ import {
   Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
+import { useAppTranslation } from '../utils/useAppTranslation';
 import { searchSymbol, getQuote } from '../services/finnhubApi';
-import { searchKrxStocks, getKrxStockPrice } from '../services/publicDataApi';
+import { loadKrxStockList, searchKrxLocal, getKrxStockPrice } from '../services/publicDataApi';
 import { usePortfolioStore, MarketType } from '../stores/usePortfolioStore';
 import { useSettingsStore } from '../stores/useSettingsStore';
+import { setCachedPrice } from '../services/priceCache';
+import { useProGate, FREE_HOLDINGS_LIMIT } from '../utils/useProGate';
 
 interface UnifiedSearchResult {
   symbol: string;
@@ -27,10 +29,12 @@ interface UnifiedSearchResult {
 }
 
 export default function AddStockScreen() {
-  const { t } = useTranslation();
+  const { t } = useAppTranslation();
   const router = useRouter();
   const { addHolding } = usePortfolioStore();
+  const holdingsCount = usePortfolioStore((s) => s.holdings.length);
   const { language } = useSettingsStore();
+  const { isPro, requirePro } = useProGate();
 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<UnifiedSearchResult[]>([]);
@@ -49,17 +53,17 @@ export default function AddStockScreen() {
       }
       setSearching(true);
       try {
-        // 한국주식과 미국주식 동시 검색
-        const [usResults, krResults] = await Promise.allSettled([
-          searchSymbol(text),
-          searchKrxStocks(text),
-        ]);
+        const isWeb = Platform.OS === 'web';
+
+        if (!isWeb) await loadKrxStockList();
+
+        const [usResults] = await Promise.allSettled([searchSymbol(text)]);
 
         const unified: UnifiedSearchResult[] = [];
 
-        // 한국주식 결과
-        if (krResults.status === 'fulfilled') {
-          krResults.value.forEach((kr) => {
+        if (!isWeb) {
+          const krLocal = searchKrxLocal(text);
+          krLocal.forEach((kr) => {
             unified.push({
               symbol: kr.srtnCd,
               displaySymbol: kr.srtnCd,
@@ -70,15 +74,20 @@ export default function AddStockScreen() {
           });
         }
 
-        // 미국주식 결과
+        // 2) Finnhub 결과 — .KS/.KQ 심볼은 한국 주식으로 분류, US는 그대로
         if (usResults.status === 'fulfilled') {
           usResults.value.slice(0, 10).forEach((us) => {
+            const isKr = us.symbol.endsWith('.KS') || us.symbol.endsWith('.KQ');
+            const krCode = isKr ? us.symbol.replace(/\.(KS|KQ)$/, '') : null;
+            if (krCode && unified.some((u) => u.symbol === krCode)) return;
             unified.push({
               symbol: us.symbol,
               displaySymbol: us.displaySymbol,
               description: us.description,
-              market: 'US',
-              marketLabel: '🇺🇸 US',
+              market: isKr ? 'KR' : 'US',
+              marketLabel: isKr
+                ? `🇰🇷 ${us.symbol.endsWith('.KS') ? 'KOSPI' : 'KOSDAQ'}`
+                : '🇺🇸 US',
             });
           });
         }
@@ -101,7 +110,7 @@ export default function AddStockScreen() {
     setLoadingPrice(true);
     try {
       if (item.market === 'KR') {
-        const krData = await getKrxStockPrice(item.symbol);
+        const krData = await getKrxStockPrice(item.symbol, item.description);
         if (krData) {
           setAvgPrice(krData.clpr);
         }
@@ -109,6 +118,8 @@ export default function AddStockScreen() {
         const quote = await getQuote(item.symbol);
         if (quote && quote.c > 0) {
           setAvgPrice(quote.c.toFixed(2));
+          // refreshPrices가 곧 재호출하지 않도록 캐시에 저장
+          setCachedPrice(item.symbol, quote.c, quote.d, quote.dp);
         }
       }
     } catch {
@@ -122,6 +133,16 @@ export default function AddStockScreen() {
       Alert.alert('Error', 'Please select a stock first');
       return;
     }
+
+    // Free plan: 5개 종목 제한
+    if (!isPro && holdingsCount >= FREE_HOLDINGS_LIMIT) {
+      requirePro({
+        title: t('pro.holdingsLimitTitle'),
+        message: t('pro.holdingsLimitMsg'),
+      });
+      return;
+    }
+
     const sharesNum = parseFloat(shares);
     const priceNum = parseFloat(avgPrice);
 

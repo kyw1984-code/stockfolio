@@ -1,13 +1,14 @@
 import { create } from 'zustand';
 import { DividendInfo, getDividendInfo, getMonthlyDividendSchedule } from '../services/dividendApi';
+import { getKrDividendInfo } from '../services/publicDataApi';
 
 interface DividendState {
   dividendData: Record<string, DividendInfo | null>;
   monthlyGoal: number;
   isLoading: boolean;
 
-  fetchDividendInfo: (symbol: string, currentPrice: number) => Promise<void>;
-  fetchAllDividends: (holdings: Array<{ symbol: string; currentPrice: number }>) => Promise<void>;
+  fetchDividendInfo: (symbol: string, currentPrice: number, market?: string, stockName?: string) => Promise<void>;
+  fetchAllDividends: (holdings: Array<{ symbol: string; currentPrice: number; market?: string; name?: string }>) => Promise<void>;
   setMonthlyGoal: (goal: number) => void;
 
   getAnnualDividend: (holdings: Array<{ symbol: string; shares: number }>) => number;
@@ -20,8 +21,13 @@ export const useDividendStore = create<DividendState>((set, get) => ({
   monthlyGoal: 500,
   isLoading: false,
 
-  fetchDividendInfo: async (symbol, currentPrice) => {
-    const info = await getDividendInfo(symbol, currentPrice);
+  fetchDividendInfo: async (symbol, currentPrice, market?, stockName?) => {
+    let info: DividendInfo | null = null;
+    if (market === 'KR' && stockName) {
+      info = await getKrDividendInfo(stockName, currentPrice);
+    } else {
+      info = await getDividendInfo(symbol, currentPrice);
+    }
     set((state) => ({
       dividendData: { ...state.dividendData, [symbol.toUpperCase()]: info },
     }));
@@ -30,7 +36,6 @@ export const useDividendStore = create<DividendState>((set, get) => ({
   fetchAllDividends: async (holdings) => {
     set({ isLoading: true });
     try {
-      // 3개씩 나눠서 순차 처리 (Finnhub rate limit 보호)
       const BATCH_SIZE = 3;
       const newData: Record<string, DividendInfo | null> = {};
 
@@ -38,7 +43,10 @@ export const useDividendStore = create<DividendState>((set, get) => ({
         const batch = holdings.slice(i, i + BATCH_SIZE);
         const results = await Promise.allSettled(
           batch.map(async (h) => {
-            const info = await getDividendInfo(h.symbol, h.currentPrice);
+            const info =
+              h.market === 'KR' && h.name
+                ? await getKrDividendInfo(h.name, h.currentPrice)
+                : await getDividendInfo(h.symbol, h.currentPrice);
             return { symbol: h.symbol.toUpperCase(), info };
           })
         );

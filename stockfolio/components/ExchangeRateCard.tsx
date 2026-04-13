@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useExchangeStore } from '../stores/useExchangeStore';
 
 export default function ExchangeRateCard() {
-  const { usdKrw, isLoading, fetchRate } = useExchangeStore();
-
-  useEffect(() => {
-    fetchRate();
-  }, []);
+  const { usdKrw, isLoading } = useExchangeStore();
 
   return (
     <View style={styles.container}>
