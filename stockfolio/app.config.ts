@@ -20,11 +20,14 @@ export default {
       bundleIdentifier: 'com.kyw1984.stockfolio',
     },
     android: {
+      package: 'com.kyw1984.stockfolio',
+      versionCode: 1,
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
         backgroundColor: '#020617',
       },
       edgeToEdgeEnabled: true,
+      permissions: ['com.android.vending.BILLING'],
     },
     web: {
       favicon: './assets/favicon.png',
@@ -36,7 +39,7 @@ export default {
         'react-native-google-mobile-ads',
         {
           // AdMob 콘솔에서 발급받은 실제 App ID로 교체하세요
-          androidAppId: 'ca-app-pub-3940256099942544~3347511713', // TODO: Android 앱 등록 후 교체
+          androidAppId: process.env.ADMOB_ANDROID_APP_ID || 'ca-app-pub-6220210021054377~2880311795',
           iosAppId: process.env.ADMOB_IOS_APP_ID || 'ca-app-pub-6220210021054377~7258688890',
         },
       ],
@@ -46,7 +49,9 @@ export default {
       publicDataApiKey: process.env.PUBLIC_DATA_API_KEY || '',
       bokApiKey: process.env.BOK_API_KEY || '',
       admobIosBannerId: process.env.ADMOB_IOS_BANNER_ID || 'ca-app-pub-6220210021054377/5285476685',
+      admobAndroidBannerId: process.env.ADMOB_ANDROID_BANNER_ID || 'ca-app-pub-3940256099942544/6300978111',
       revenueCatIosKey: process.env.REVENUECAT_IOS_API_KEY || '',
+      revenueCatAndroidKey: process.env.REVENUECAT_ANDROID_API_KEY || '',
     },
   },
 };

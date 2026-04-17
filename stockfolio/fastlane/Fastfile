@@ -1,0 +1,33 @@
+default_platform(:ios)
+
+# App Store Connect API 키 설정
+def api_key
+  app_store_connect_api_key(
+    key_id: "G22ZD3C32R",
+    issuer_id: "ac7c83b3-1116-4a32-b237-ea15e8b87bed",
+    key_filepath: File.expand_path("~/Downloads/AuthKey_G22ZD3C32R.p8"),
+    duration: 1200,
+    in_house: false
+  )
+end
+
+platform :ios do
+
+  # App Store Connect에 앱 등록
+  desc "App Store Connect에 앱 등록"
+  lane :register_app do
+    # API 키를 전역으로 설정 — produce가 자동으로 참조함
+    api_key
+    produce(
+      app_identifier: "com.kyw1984.stockfolio",
+      app_name: "StockFolio - Stock Portfolio",
+      language: "ko",
+      app_version: "1.0.0",
+      sku: "stockfolio2024",
+      platform: "ios",
+      skip_devcenter: true
+    )
+    UI.success "✅ 앱 등록 완료! / App registration complete!"
+  end
+
+end

@@ -8,7 +8,7 @@ const BANNER_AD_UNIT_ID = __DEV__
   ? TestIds.BANNER
   : Platform.select({
       ios: Constants.expoConfig?.extra?.admobIosBannerId ?? TestIds.BANNER,
-      android: 'ca-app-pub-XXXXXXXXXXXXXXXX/XXXXXXXXXX', // TODO: Android 배포 전 실제 ID 입력
+      android: Constants.expoConfig?.extra?.admobAndroidBannerId ?? TestIds.BANNER,
       default: TestIds.BANNER,
     }) ?? TestIds.BANNER;
 

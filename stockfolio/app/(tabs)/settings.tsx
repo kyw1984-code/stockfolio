@@ -1,4 +1,6 @@
-import { View, Text, ScrollView, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
+import { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Switch, ActivityIndicator, Modal, Alert, Linking, Pressable } from 'react-native';
+import type { PurchasesPackage } from 'react-native-purchases';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import {
@@ -37,13 +39,44 @@ export default function SettingsScreen() {
     setTheme,
     togglePriceAlerts,
     toggleDividendAlerts,
-    setIsPro,
   } = useSettingsStore();
 
   const { packages, isPurchasing, isRestoring, isLoadingPackages, handlePurchase, handleRestore } = usePurchase();
 
+  const [showPlanModal, setShowPlanModal] = useState(false);
+
   const isKo = language === 'ko';
   const isDark = theme === 'dark';
+
+  const monthlyPkg = packages.find((p) => p.packageType === 'MONTHLY');
+  const annualPkg = packages.find((p) => p.packageType === 'ANNUAL');
+
+  const openPurchaseFlow = () => {
+    if (packages.length === 0) {
+      Alert.alert(
+        isKo ? '연결 오류' : 'Connection Error',
+        isKo
+          ? '구독 정보를 불러올 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.'
+          : 'Unable to load subscription info. Please check your connection and try again.'
+      );
+      return;
+    }
+    setShowPlanModal(true);
+  };
+
+  const selectPackage = async (pkg: PurchasesPackage) => {
+    setShowPlanModal(false);
+    await handlePurchase(pkg);
+  };
+
+  const openManageSubscription = () => {
+    Linking.openURL('https://apps.apple.com/account/subscriptions').catch(() => {
+      Alert.alert(
+        isKo ? '오류' : 'Error',
+        isKo ? 'App Store를 열 수 없습니다.' : 'Unable to open App Store.'
+      );
+    });
+  };
 
   const handleLanguageToggle = () => {
     const newLang = language === 'en' ? 'ko' : 'en';
@@ -57,6 +90,7 @@ export default function SettingsScreen() {
   };
 
   return (
+    <>
     <ScrollView className="flex-1 bg-slate-50 dark:bg-slate-950" showsVerticalScrollIndicator={false}>
       <View className="px-5" style={{ paddingTop: Math.max(insets.top, 44) + 16 }}>
         <View className="mb-8">
@@ -112,14 +146,7 @@ export default function SettingsScreen() {
                   className="rounded-2xl overflow-hidden shadow-2xl shadow-amber-400/50 mb-3"
                   activeOpacity={0.85}
                   disabled={isPurchasing || isLoadingPackages}
-                  onPress={() => {
-                    if (packages.length > 0) {
-                      handlePurchase(packages[0]);
-                    } else {
-                      // RC API 키 미설정 시 개발용 토글
-                      setIsPro(true);
-                    }
-                  }}
+                  onPress={openPurchaseFlow}
                 >
                   <LinearGradient
                     colors={['#F59E0B', '#FBBF24', '#FCD34D']}
@@ -164,10 +191,10 @@ export default function SettingsScreen() {
               <TouchableOpacity
                 className="bg-white/15 py-4 rounded-2xl items-center border border-white/30"
                 activeOpacity={0.9}
-                onPress={() => setIsPro(false)}
+                onPress={openManageSubscription}
               >
                 <Text className="text-white font-black text-xs uppercase tracking-[2px]">
-                  {isKo ? '무료 플랜으로 전환 (테스트용)' : 'Switch to Free (Dev)'}
+                  {isKo ? '구독 관리' : 'Manage Subscription'}
                 </Text>
               </TouchableOpacity>
             )}
@@ -251,6 +278,97 @@ export default function SettingsScreen() {
         <DataSourceFooter showKorean={isKo} />
       </View>
     </ScrollView>
+
+    <Modal
+      visible={showPlanModal}
+      transparent
+      animationType="slide"
+      onRequestClose={() => setShowPlanModal(false)}
+    >
+      <Pressable
+        className="flex-1 justify-end bg-black/60"
+        onPress={() => setShowPlanModal(false)}
+      >
+        <Pressable
+          className="bg-white dark:bg-slate-900 rounded-t-3xl px-6 pt-6"
+          style={{ paddingBottom: Math.max(insets.bottom, 24) + 12 }}
+          onPress={(e) => e.stopPropagation()}
+        >
+          <View className="items-center mb-5">
+            <View className="w-10 h-1 bg-slate-300 dark:bg-slate-700 rounded-full mb-5" />
+            <Text className="text-slate-900 dark:text-white text-xl font-extrabold tracking-tight mb-1">
+              {isKo ? '플랜 선택' : 'Choose Your Plan'}
+            </Text>
+            <Text className="text-slate-500 dark:text-slate-400 text-xs font-semibold">
+              {isKo ? '언제든지 취소할 수 있습니다' : 'Cancel anytime'}
+            </Text>
+          </View>
+
+          {annualPkg && (
+            <TouchableOpacity
+              className="rounded-2xl border-2 border-amber-400 bg-amber-50 dark:bg-amber-500/10 p-5 mb-3"
+              activeOpacity={0.8}
+              disabled={isPurchasing}
+              onPress={() => selectPackage(annualPkg)}
+            >
+              <View className="flex-row justify-between items-start mb-1">
+                <Text className="text-slate-900 dark:text-white font-extrabold text-base">
+                  {isKo ? '연간 플랜' : 'Annual Plan'}
+                </Text>
+                <View className="bg-amber-400 px-2 py-0.5 rounded-full">
+                  <Text className="text-black font-black text-[10px] uppercase tracking-wider">
+                    {isKo ? '최고 가치' : 'Best Value'}
+                  </Text>
+                </View>
+              </View>
+              <Text className="text-slate-900 dark:text-white text-2xl font-black mb-1">
+                {annualPkg.product.priceString}
+                <Text className="text-slate-500 dark:text-slate-400 text-sm font-semibold">
+                  {isKo ? ' / 년' : ' / year'}
+                </Text>
+              </Text>
+              {monthlyPkg && (
+                <Text className="text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+                  {isKo
+                    ? `월 결제 대비 ${Math.round((1 - annualPkg.product.price / (monthlyPkg.product.price * 12)) * 100)}% 절약`
+                    : `Save ${Math.round((1 - annualPkg.product.price / (monthlyPkg.product.price * 12)) * 100)}% vs monthly`}
+                </Text>
+              )}
+            </TouchableOpacity>
+          )}
+
+          {monthlyPkg && (
+            <TouchableOpacity
+              className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 p-5 mb-5"
+              activeOpacity={0.8}
+              disabled={isPurchasing}
+              onPress={() => selectPackage(monthlyPkg)}
+            >
+              <Text className="text-slate-900 dark:text-white font-extrabold text-base mb-1">
+                {isKo ? '월간 플랜' : 'Monthly Plan'}
+              </Text>
+              <Text className="text-slate-900 dark:text-white text-2xl font-black">
+                {monthlyPkg.product.priceString}
+                <Text className="text-slate-500 dark:text-slate-400 text-sm font-semibold">
+                  {isKo ? ' / 월' : ' / month'}
+                </Text>
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          <TouchableOpacity
+            className="py-3 items-center"
+            activeOpacity={0.7}
+            onPress={() => setShowPlanModal(false)}
+          >
+            <Text className="text-slate-500 dark:text-slate-400 font-semibold text-sm">
+              {isKo ? '취소' : 'Cancel'}
+            </Text>
+          </TouchableOpacity>
+        </Pressable>
+      </Pressable>
+    </Modal>
+    </>
   );
 }
 

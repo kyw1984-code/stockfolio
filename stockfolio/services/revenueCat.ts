@@ -12,10 +12,10 @@ export function initRevenueCat(userId?: string) {
   const apiKey =
     Platform.OS === 'ios'
       ? (Constants.expoConfig?.extra?.revenueCatIosKey as string) ?? ''
-      : ''; // Android 지원 시 추가
+      : (Constants.expoConfig?.extra?.revenueCatAndroidKey as string) ?? '';
 
   if (!apiKey) {
-    console.warn('[RevenueCat] API 키가 설정되지 않았습니다. .env의 REVENUECAT_IOS_API_KEY를 확인하세요.');
+    console.warn('[RevenueCat] API 키가 설정되지 않았습니다. .env의 REVENUECAT_IOS_API_KEY / REVENUECAT_ANDROID_API_KEY를 확인하세요.');
     return;
   }
 

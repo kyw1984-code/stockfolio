@@ -38,5 +38,9 @@ yarn-error.*
 *.tsbuildinfo
 
 # generated native folders
-/ios
 /android
+/ios/Pods
+
+# Android keystore passwords
+android/gradle.properties
+android/app/*.keystore

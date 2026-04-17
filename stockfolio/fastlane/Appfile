@@ -1,0 +1,5 @@
+app_identifier "com.kyw1984.stockfolio"
+apple_id "kyw1984@hanmail.net"
+
+itc_team_id ""   # App Store Connect Team ID (개인 계정은 생략 가능)
+team_id ""       # Developer Portal Team ID (개인 계정은 생략 가능)
