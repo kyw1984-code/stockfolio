@@ -1,0 +1,5 @@
+env: load .env
+env: export FINNHUB_API_KEY PUBLIC_DATA_API_KEY BOK_API_KEY
+› Skipping dev server
+Unexpected devicectl JSON version output from devicectl. Connecting to physical Apple devices may not work as expected.
+CommandError: No iOS devices available in Simulator.app

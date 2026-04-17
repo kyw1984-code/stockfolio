@@ -1,0 +1,626 @@
+env: load .env
+env: export FINNHUB_API_KEY PUBLIC_DATA_API_KEY BOK_API_KEY
+Unexpected devicectl JSON version output from devicectl. Connecting to physical Apple devices may not work as expected.
+› Using --device EF42BC95-6909-4FC7-AB67-7EAB2BB31304
+› Planning build
+› Executing react-native Pods/hermes-engine » [CP-User] [Hermes] Replace Hermes for the right configuration, if needed
+› Executing react-native Pods/ReactNativeDependencies » [CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed
+› Executing react-native Pods/ReactNativeDependencies » [CP] Copy XCFrameworks
+› Executing react-native Pods/React-Core-prebuilt » [CP-User] [RNDeps] Replace React Native Core for the right configuration, if needed
+› Executing react-native Pods/React-Core-prebuilt » [CP] Copy XCFrameworks
+› Preparing Pods/React-Core-React-Core_privacy » ResourceBundle-React-Core_privacy-React-Core-Info.plist
+› Preparing Pods/React-cxxreact-React-cxxreact_privacy » ResourceBundle-React-cxxreact_privacy-React-cxxreact-Info.plist
+› Executing react-native Pods/React-RCTFBReactNativeSpec » [CP-User] [RN]Check FBReactNativeSpec
+› Compiling stockfolio Pods/ReactCodegen » States.cpp
+› Compiling stockfolio Pods/ReactCodegen » EventEmitters.cpp
+› Compiling stockfolio Pods/ReactCodegen » EventEmitters.cpp
+› Compiling stockfolio Pods/ReactCodegen » EventEmitters.cpp
+› Compiling stockfolio Pods/ReactCodegen » Props.cpp
+› Compiling stockfolio Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling stockfolio Pods/ReactCodegen » EventEmitters.cpp
+› Compiling stockfolio Pods/ReactCodegen » RCTModulesConformingToProtocolsProvider.mm
+› Compiling stockfolio Pods/ReactCodegen » Props.cpp
+› Compiling stockfolio Pods/ReactCodegen » rnworklets-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rnsvgJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » safeareacontextJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » safeareacontext-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rnworkletsJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » rnsvg-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rnscreensJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » rnscreens-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rnreanimatedJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » rnreanimated-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rngesturehandler_codegenJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » rngesturehandler_codegen-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » rnasyncstorageJSI-generated.cpp
+› Compiling stockfolio Pods/ReactCodegen » rnasyncstorage-generated.mm
+› Compiling stockfolio Pods/ReactCodegen » States.cpp
+› Compiling stockfolio Pods/ReactCodegen » States.cpp
+› Compiling stockfolio Pods/ReactCodegen » States.cpp
+› Compiling stockfolio Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling stockfolio Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling stockfolio Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling stockfolio Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling stockfolio Pods/ReactCodegen » RCTUnstableModulesRequiringMainQueueSetupProvider.mm
+› Compiling stockfolio Pods/ReactCodegen » RCTThirdPartyComponentsProvider.mm
+› Compiling stockfolio Pods/ReactCodegen » RCTModuleProviders.mm
+› Compiling stockfolio Pods/ReactCodegen » Props.cpp
+› Compiling stockfolio Pods/ReactCodegen » Props.cpp
+› Compiling stockfolio Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling stockfolio Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling stockfolio Pods/ReactCodegen » ComponentDescriptors.cpp
+› Packaging stockfolio Pods/ReactCodegen » libReactCodegen.a
+› Compiling stockfolio Pods/ReactAppDependencyProvider » RCTAppDependencyProvider.mm
+› Packaging stockfolio Pods/ReactAppDependencyProvider » libReactAppDependencyProvider.a
+› Preparing Pods/ExpoFileSystem-ExpoFileSystem_privacy » ResourceBundle-ExpoFileSystem_privacy-ExpoFileSystem-Info.plist
+› Preparing Pods/RNCAsyncStorage-RNCAsyncStorage_resources » ResourceBundle-RNCAsyncStorage_resources-RNCAsyncStorage-Info.plist
+› Preparing Pods/RNSVG-RNSVGFilters » ResourceBundle-RNSVGFilters-RNSVG-Info.plist
+› Executing StockFolio » [Expo] Configure project
+› Linking   StockFolio » StockFolio.debug.dylib
+› Linking   StockFolio » StockFolio
+› Executing StockFolio » Bundle React Native code and images
+› Preparing StockFolio » Info.plist
+› Generating debug StockFolio » StockFolio.app.dSYM
+› Generating debug StockFolio » StockFolio.app.dSYM
+› Signing   StockFolio » StockFolio.debug.dylib
+› Signing   StockFolio » __preview.dylib
+› Signing   StockFolio » StockFolio.app
+› Build Succeeded
+
+› 0 error(s), and 0 warning(s)
+
+Starting Metro Bundler
+Waiting on http://localhost:8081
+› Installing /Users/youngwookkim/Library/Developer/Xcode/DerivedData/StockFolio-dgwjmlhbxotgzhaohguevekuovns/Build/Products/Debug-iphonesimulator/StockFolio.app
+› Installing on iPhone 17 Pro
+› Opening on iPhone 17 Pro (com.anonymous.stockfolio)
+› Opening com.anonymous.stockfolio://expo-development-client/?url=http%3A%2F%2F192.168.219.131%3A8081 on iPhone 17 Pro
+
+› Logs for your project will appear below.
+iOS Bundled 784ms index.ts (3214 modules)
+ WARN  No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+[libapp_launch_measurement.dylib] Failed to send CA Event for app launch
+measurements for ca_event_type: 0 event_name:
+com.apple.app_launch_measurement.FirstFramePresentationMetric
+[libapp_launch_measurement.dylib] Failed to send CA Event for app launch
+measurements for ca_event_type: 1 event_name:
+com.apple.app_launch_measurement.ExtendedLaunchMetrics
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 72ms index.ts (1 module)
+[libapp_launch_measurement.dylib] Failed to send CA Event for app launch
+measurements for ca_event_type: 0 event_name:
+com.apple.app_launch_measurement.FirstFramePresentationMetric
+[libapp_launch_measurement.dylib] Failed to send CA Event for app launch
+measurements for ca_event_type: 1 event_name:
+com.apple.app_launch_measurement.ExtendedLaunchMetrics
+ WARN  No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+[React] { [Error: expo-linking needs access to the expo-constants manifest
+(app.json or app.config.js) to determine what URI scheme to use. Setup the
+manifest and rebuild:
+https://github.com/expo/expo/blob/main/packages/expo-constants/README.md]
+componentStack: '\n    at ContextNavigator
+(http://localhost:8081/index.bundle//&platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.anonymous.stockfolio&transform.routerRoot=app&transform.engine=hermes&transform.bytecode=1&unstable_transformProfile=hermes-stable:186239:24)\n
+at ExpoRoot
+(http://localhost:8081/index.bundle//&platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.anonymous.stockfolio&transform.routerRoot=app&transform.engine=hermes&transform.bytecode=1&unstable_transformProfile=hermes-stable:186207:28)\n
+at App (<anonymous>)\n    at withDevTools(App) (ht<…>
+ ERROR  [Error: expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md] 
+
+Code: Schemes.js
+[0m [90m 83 |[39m     [36mif[39m ([33mConstants[39m[33m.[39mexecutionEnvironment [33m!==[39m [33mExecutionEnvironment[39m[33m.[39m[33mStoreClient[39m [33m&&[39m
+ [90m 84 |[39m         [33m![39mhasConstantsManifest()) {
+[31m[1m>[22m[39m[90m 85 |[39m         [36mthrow[39m [36mnew[39m [33mError[39m([32m`expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md`[39m)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 86 |[39m     }
+ [90m 87 |[39m     [36mconst[39m manifestSchemes [33m=[39m collectManifestSchemes()[33m;[39m
+ [90m 88 |[39m     [36mconst[39m nativeAppId [33m=[39m getNativeAppIdScheme()[33m;[39m[0m
+Call Stack
+  resolveScheme (node_modules/expo-linking/build/Schemes.js:85:24)
+  createURL (node_modules/expo-linking/build/createURL.js:70:41)
+  getRootURL (node_modules/expo-router/build/link/linking.js:79:37)
+  getInitialURL (node_modules/expo-router/build/link/linking.js:68:23)
+  getInitialURL (node_modules/expo-router/build/getLinkingConfig.js:68:74)
+  useStore (node_modules/expo-router/build/global-state/router-store.js:172:50)
+  ContextNavigator (node_modules/expo-router/build/ExpoRoot.js:128:46)
+  callComponent.reactStackBottomFrame (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15887:29)
+  renderWithHooks (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3857:40)
+  updateFunctionComponent (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:7289:34)
+  beginWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:8541:41)
+  runWithFiberInDEV (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:683:21)
+  performUnitOfWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12220:39)
+  workLoopSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12044:58)
+  renderRootSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12024:23)
+  performWorkOnRoot (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:11587:53)
+  performWorkOnRootViaSchedulerTask (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3073:24) 
+
+Code: wrap-jsx.js
+[0m [90m 18 |[39m             type [33m=[39m api_1[33m.[39minteropComponents[33m.[39m[36mget[39m(type) [33m?[39m[33m?[39m type[33m;[39m
+ [90m 19 |[39m         }
+[31m[1m>[22m[39m[90m 20 |[39m         [36mreturn[39m jsx[33m.[39mcall(jsx[33m,[39m type[33m,[39m props[33m,[39m [33m...[39mrest)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 21 |[39m     }[33m;[39m
+ [90m 22 |[39m }
+ [90m 23 |[39m [90m//# sourceMappingURL=wrap-jsx.js.map[39m[0m
+Call Stack
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  ExpoRoot (node_modules/expo-router/build/ExpoRoot.js:87:12)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  App (node_modules/expo-router/build/qualified-entry.js:21:7)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  WithDevTools (node_modules/expo/src/launch/withDevTools.ios.tsx:38:12)
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 69ms index.ts (1 module)
+ WARN  No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+[React] { [Error: expo-linking needs access to the expo-constants manifest
+(app.json or app.config.js) to determine what URI scheme to use. Setup the
+manifest and rebuild:
+https://github.com/expo/expo/blob/main/packages/expo-constants/README.md]
+componentStack: '\n    at ContextNavigator
+(http://localhost:8081/index.bundle//&platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.anonymous.stockfolio&transform.routerRoot=app&transform.engine=hermes&transform.bytecode=1&unstable_transformProfile=hermes-stable:186239:24)\n
+at ExpoRoot
+(http://localhost:8081/index.bundle//&platform=ios&dev=true&lazy=true&minify=false&inlineSourceMap=false&modulesOnly=false&runModule=true&excludeSource=true&sourcePaths=url-server&app=com.anonymous.stockfolio&transform.routerRoot=app&transform.engine=hermes&transform.bytecode=1&unstable_transformProfile=hermes-stable:186207:28)\n
+at App (<anonymous>)\n    at withDevTools(App) (ht<…>
+ ERROR  [Error: expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md] 
+
+Code: Schemes.js
+[0m [90m 83 |[39m     [36mif[39m ([33mConstants[39m[33m.[39mexecutionEnvironment [33m!==[39m [33mExecutionEnvironment[39m[33m.[39m[33mStoreClient[39m [33m&&[39m
+ [90m 84 |[39m         [33m![39mhasConstantsManifest()) {
+[31m[1m>[22m[39m[90m 85 |[39m         [36mthrow[39m [36mnew[39m [33mError[39m([32m`expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md`[39m)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 86 |[39m     }
+ [90m 87 |[39m     [36mconst[39m manifestSchemes [33m=[39m collectManifestSchemes()[33m;[39m
+ [90m 88 |[39m     [36mconst[39m nativeAppId [33m=[39m getNativeAppIdScheme()[33m;[39m[0m
+Call Stack
+  resolveScheme (node_modules/expo-linking/build/Schemes.js:85:24)
+  createURL (node_modules/expo-linking/build/createURL.js:70:41)
+  getRootURL (node_modules/expo-router/build/link/linking.js:79:37)
+  getInitialURL (node_modules/expo-router/build/link/linking.js:68:23)
+  getInitialURL (node_modules/expo-router/build/getLinkingConfig.js:68:74)
+  useStore (node_modules/expo-router/build/global-state/router-store.js:172:50)
+  ContextNavigator (node_modules/expo-router/build/ExpoRoot.js:128:46)
+  callComponent.reactStackBottomFrame (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15887:29)
+  renderWithHooks (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3857:40)
+  updateFunctionComponent (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:7289:34)
+  beginWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:8541:41)
+  runWithFiberInDEV (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:683:21)
+  performUnitOfWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12220:39)
+  workLoopSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12044:58)
+  renderRootSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12024:23)
+  performWorkOnRoot (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:11587:53)
+  performWorkOnRootViaSchedulerTask (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3073:24) 
+
+Code: wrap-jsx.js
+[0m [90m 18 |[39m             type [33m=[39m api_1[33m.[39minteropComponents[33m.[39m[36mget[39m(type) [33m?[39m[33m?[39m type[33m;[39m
+ [90m 19 |[39m         }
+[31m[1m>[22m[39m[90m 20 |[39m         [36mreturn[39m jsx[33m.[39mcall(jsx[33m,[39m type[33m,[39m props[33m,[39m [33m...[39mrest)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 21 |[39m     }[33m;[39m
+ [90m 22 |[39m }
+ [90m 23 |[39m [90m//# sourceMappingURL=wrap-jsx.js.map[39m[0m
+Call Stack
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  ExpoRoot (node_modules/expo-router/build/ExpoRoot.js:87:12)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  App (node_modules/expo-router/build/qualified-entry.js:21:7)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  WithDevTools (node_modules/expo/src/launch/withDevTools.ios.tsx:38:12)
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 66ms index.ts (1 module)
+ WARN  No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+[React] { [Error: UnableToResolveError Unable to resolve module expo-constants
+from
+/Users/youngwookkim/Desktop/stock/stockfolio/node_modules/@expo/metro-runtime/src/location/install.native.ts:
+expo-constants could not be found within the project or in these directories:
+node_modules
+\^[[0m \^[[90m  8 |\^[[39m \^[[90m// This file configures the runtime
+environment to increase compatibility with WinterCG.\^[[39m
+\^[[90m  9 |\^[[39m \^[[90m// https://wintercg.org/\^[[39m
+\^[[31m\^[[1m>\^[[22m\^[[39m\^[[90m 10 |\^[[39m \^[[36mimport\^[[39m
+\^[[33mConstants\^[[39m \^[[36mfrom\^[[39m
+\^[[32m'expo-constants'\^[[39m\^[[33m;\^[[39m
+\^[[90m    |\^[[39m                        \^[[31m\^[[1m^\^[[22m\^[[39m
+\^[[90m 11 |\^[[39m
+\^[[90m 12 |\^[[39m \^[[36mimport\^[[39m { install\^[[33m,\^[[39m
+setLocationHref } \^[[36mfrom\^[[39m \^[[32m'./Location'\^[[39m\^[[33m;\^[[39m
+\^[[90m 13 |\^[[39m \^[[36mimport\^[[39m getDevServer \^[[36mfrom\^[[39m
+\^[[32m'../getDevServer'\^[[39m\^[[33m;\^[[39m\^[[0m] preventSymbolication<…>
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundling failed 592ms index.ts (1 module)
+Unable to resolve "expo-constants" from "node_modules/@expo/metro-runtime/src/location/install.native.ts"
+[0m [90m  8 |[39m [90m// This file configures the runtime environment to increase compatibility with WinterCG.[39m
+ [90m  9 |[39m [90m// https://wintercg.org/[39m
+[31m[1m>[22m[39m[90m 10 |[39m [36mimport[39m [33mConstants[39m [36mfrom[39m [32m'expo-constants'[39m[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 11 |[39m
+ [90m 12 |[39m [36mimport[39m { install[33m,[39m setLocationHref } [36mfrom[39m [32m'./Location'[39m[33m;[39m
+ [90m 13 |[39m [36mimport[39m getDevServer [36mfrom[39m [32m'../getDevServer'[39m[33m;[39m[0m
+
+Import stack:
+
+ node_modules/@expo/metro-runtime/src/location/install.native.ts
+ | import "expo-constants"
+
+ node_modules/@expo/metro-runtime/src/index.ts
+ | import "./location/install"
+
+ node_modules/expo-router/entry-classic.js
+ | import "@expo/metro-runtime"
+
+ node_modules/expo-router/entry.js
+ | import "expo-router/entry-classic"
+
+ index.ts
+ | import "expo-router/entry"
+
+ 
+ | import "./index"
+
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 488ms index.ts (1 module)
+ WARN  No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+ ERROR  [Error: expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md] 
+
+Code: Schemes.js
+[0m [90m 83 |[39m     [36mif[39m ([33mConstants[39m[33m.[39mexecutionEnvironment [33m!==[39m [33mExecutionEnvironment[39m[33m.[39m[33mStoreClient[39m [33m&&[39m
+ [90m 84 |[39m         [33m![39mhasConstantsManifest()) {
+[31m[1m>[22m[39m[90m 85 |[39m         [36mthrow[39m [36mnew[39m [33mError[39m([32m`expo-linking needs access to the expo-constants manifest (app.json or app.config.js) to determine what URI scheme to use. Setup the manifest and rebuild: https://github.com/expo/expo/blob/main/packages/expo-constants/README.md`[39m)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 86 |[39m     }
+ [90m 87 |[39m     [36mconst[39m manifestSchemes [33m=[39m collectManifestSchemes()[33m;[39m
+ [90m 88 |[39m     [36mconst[39m nativeAppId [33m=[39m getNativeAppIdScheme()[33m;[39m[0m
+Call Stack
+  resolveScheme (node_modules/expo-linking/build/Schemes.js:85:24)
+  createURL (node_modules/expo-linking/build/createURL.js:70:41)
+  getRootURL (node_modules/expo-router/build/link/linking.js:79:37)
+  getInitialURL (node_modules/expo-router/build/link/linking.js:68:23)
+  getInitialURL (node_modules/expo-router/build/getLinkingConfig.js:68:74)
+  useStore (node_modules/expo-router/build/global-state/router-store.js:172:50)
+  ContextNavigator (node_modules/expo-router/build/ExpoRoot.js:128:46)
+  callComponent.reactStackBottomFrame (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:15887:29)
+  renderWithHooks (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3857:40)
+  updateFunctionComponent (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:7289:34)
+  beginWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:8541:41)
+  runWithFiberInDEV (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:683:21)
+  performUnitOfWork (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12220:39)
+  workLoopSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12044:58)
+  renderRootSync (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:12024:23)
+  performWorkOnRoot (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:11587:53)
+  performWorkOnRootViaSchedulerTask (node_modules/react-native/Libraries/Renderer/implementations/ReactFabric-dev.js:3073:24) 
+
+Code: wrap-jsx.js
+[0m [90m 18 |[39m             type [33m=[39m api_1[33m.[39minteropComponents[33m.[39m[36mget[39m(type) [33m?[39m[33m?[39m type[33m;[39m
+ [90m 19 |[39m         }
+[31m[1m>[22m[39m[90m 20 |[39m         [36mreturn[39m jsx[33m.[39mcall(jsx[33m,[39m type[33m,[39m props[33m,[39m [33m...[39mrest)[33m;[39m
+ [90m    |[39m                        [31m[1m^[22m[39m
+ [90m 21 |[39m     }[33m;[39m
+ [90m 22 |[39m }
+ [90m 23 |[39m [90m//# sourceMappingURL=wrap-jsx.js.map[39m[0m
+Call Stack
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  ExpoRoot (node_modules/expo-router/build/ExpoRoot.js:87:12)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  App (node_modules/expo-router/build/qualified-entry.js:21:7)
+  call (<native>)
+  apply (<native>)
+  <anonymous> (node_modules/react-native-css-interop/dist/runtime/wrap-jsx.js:20:24)
+  WithDevTools (node_modules/expo/src/launch/withDevTools.ios.tsx:38:12)
