@@ -44,7 +44,11 @@ export default {
         },
       ],
     ],
+    owner: 'chriskim84',
     extra: {
+      eas: {
+        projectId: '9467aeb8-6aea-48fa-910e-f5de61ec49d9',
+      },
       finnhubApiKey: process.env.FINNHUB_API_KEY || '',
       publicDataApiKey: process.env.PUBLIC_DATA_API_KEY || '',
       bokApiKey: process.env.BOK_API_KEY || '',
