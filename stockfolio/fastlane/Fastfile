@@ -1,11 +1,13 @@
 default_platform(:ios)
 
-# App Store Connect API 키 설정
+# ─────────────────────────────────────────────
+# App Store Connect API 키
+# ─────────────────────────────────────────────
 def api_key
   app_store_connect_api_key(
     key_id: "G22ZD3C32R",
     issuer_id: "ac7c83b3-1116-4a32-b237-ea15e8b87bed",
-    key_filepath: File.expand_path("~/Downloads/AuthKey_G22ZD3C32R.p8"),
+    key_filepath: File.expand_path("~/Desktop/AuthKey_G22ZD3C32R.p8"),
     duration: 1200,
     in_house: false
   )
@@ -13,10 +15,11 @@ end
 
 platform :ios do
 
-  # App Store Connect에 앱 등록
+  # ─────────────────────────────────────────────
+  # App Store Connect에 앱 등록 (최초 1회)
+  # ─────────────────────────────────────────────
   desc "App Store Connect에 앱 등록"
   lane :register_app do
-    # API 키를 전역으로 설정 — produce가 자동으로 참조함
     api_key
     produce(
       app_identifier: "com.kyw1984.stockfolio",
@@ -27,7 +30,77 @@ platform :ios do
       platform: "ios",
       skip_devcenter: true
     )
-    UI.success "✅ 앱 등록 완료! / App registration complete!"
+    UI.success "✅ 앱 등록 완료!"
+  end
+
+  # ─────────────────────────────────────────────
+  # IPA 빌드 (gym)
+  # 출력: build/StockFolio.ipa
+  # ─────────────────────────────────────────────
+  desc "iOS IPA 빌드 (App Store 배포용)"
+  lane :build do
+    gym(
+      workspace:              "ios/StockFolio.xcworkspace",
+      scheme:                 "StockFolio",
+      configuration:          "Release",
+      export_method:          "app-store",
+      output_directory:       "build",
+      output_name:            "StockFolio.ipa",
+      clean:                  true,
+      export_options: {
+        method:                           "app-store",
+        signingStyle:                     "manual",
+        teamID:                           "SJMRCCH98M",
+        provisioningProfiles: {
+          "com.kyw1984.stockfolio" => "StockFolio AppStore Dist"
+        }
+      },
+      xcargs: "DEVELOPMENT_TEAM=SJMRCCH98M CODE_SIGN_STYLE=Manual"
+    )
+    UI.success "✅ 빌드 완료: build/StockFolio.ipa"
+  end
+
+  # ─────────────────────────────────────────────
+  # TestFlight 업로드 (기존 IPA 사용)
+  # ─────────────────────────────────────────────
+  desc "TestFlight 업로드 (build/StockFolio.ipa)"
+  lane :upload do
+    key = api_key
+    pilot(
+      api_key:                          key,
+      ipa:                              "build/StockFolio.ipa",
+      app_identifier:                   "com.kyw1984.stockfolio",
+      skip_waiting_for_build_processing: true,
+      skip_submission:                  true
+    )
+    UI.success "✅ TestFlight 업로드 완료!"
+  end
+
+  # ─────────────────────────────────────────────
+  # 빌드 + TestFlight 업로드 (원스텝)
+  # 사용: cd stockfolio && LANG=en_US.UTF-8 fastlane ios beta
+  # ─────────────────────────────────────────────
+  desc "빌드 후 TestFlight 업로드"
+  lane :beta do
+    build
+    upload
+  end
+
+  # ─────────────────────────────────────────────
+  # 메타데이터 + 스크린샷 업로드 (심사 제출 안 함)
+  # ─────────────────────────────────────────────
+  desc "App Store 메타데이터/스크린샷 업로드 (제출 제외)"
+  lane :upload_metadata do
+    key = api_key
+    deliver(
+      api_key:                       key,
+      app_identifier:                "com.kyw1984.stockfolio",
+      submit_for_review:             false,
+      force:                         true,
+      skip_binary_upload:            true,
+      precheck_include_in_app_purchases: false
+    )
+    UI.success "✅ 메타데이터 업로드 완료!"
   end
 
 end
