@@ -2,11 +2,12 @@ import { useEffect, useRef } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import '../global.css';
 import { useSettingsStore } from '../stores/useSettingsStore';
 import { usePortfolioStore } from '../stores/usePortfolioStore';
 import { useDividendStore } from '../stores/useDividendStore';
-import { initRevenueCat } from '../services/revenueCat';
+import { initRevenueCat, checkProEntitlement } from '../services/revenueCat';
 import {
   requestNotificationPermission,
   scheduleDividendNotifications,
@@ -15,14 +16,20 @@ import {
 
 export default function RootLayout() {
   const theme = useSettingsStore((s) => s.theme);
-  const { isPro, dividendAlertsEnabled } = useSettingsStore();
+  const { isPro, dividendAlertsEnabled, setIsPro } = useSettingsStore();
   const holdings = usePortfolioStore((s) => s.holdings);
   const dividendData = useDividendStore((s) => s.dividendData);
   const notificationListener = useRef<Notifications.EventSubscription | null>(null);
 
-  // RevenueCat 초기화 (앱 시작 시 1회)
+  // ATT 권한 요청 → RevenueCat 초기화 → Pro entitlement 동기화
   useEffect(() => {
-    initRevenueCat();
+    async function initApp() {
+      await requestTrackingPermissionsAsync();
+      initRevenueCat();
+      const pro = await checkProEntitlement();
+      setIsPro(pro);
+    }
+    initApp();
   }, []);
 
   // 알림 권한 요청 (앱 시작 시 1회)

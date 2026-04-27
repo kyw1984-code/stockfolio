@@ -18,6 +18,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.kyw1984.stockfolio',
+      buildNumber: '5',
     },
     android: {
       package: 'com.kyw1984.stockfolio',
@@ -36,9 +37,15 @@ export default {
     plugins: [
       'expo-router',
       [
+        'expo-tracking-transparency',
+        {
+          userTrackingPermission:
+            'This identifier will be used to deliver personalized ads and measure ad performance.',
+        },
+      ],
+      [
         'react-native-google-mobile-ads',
         {
-          // AdMob 콘솔에서 발급받은 실제 App ID로 교체하세요
           androidAppId: process.env.ADMOB_ANDROID_APP_ID || 'ca-app-pub-6220210021054377~2880311795',
           iosAppId: process.env.ADMOB_IOS_APP_ID || 'ca-app-pub-6220210021054377~7258688890',
         },
@@ -52,6 +59,9 @@ export default {
       admobAndroidBannerId: process.env.ADMOB_ANDROID_BANNER_ID || 'ca-app-pub-3940256099942544/6300978111',
       revenueCatIosKey: process.env.REVENUECAT_IOS_API_KEY || '',
       revenueCatAndroidKey: process.env.REVENUECAT_ANDROID_API_KEY || '',
+      eas: {
+        projectId: '9467aeb8-6aea-48fa-910e-f5de61ec49d9',
+      },
     },
   },
 };

@@ -365,6 +365,26 @@ export default function SettingsScreen() {
               {isKo ? '취소' : 'Cancel'}
             </Text>
           </TouchableOpacity>
+
+          <View className="flex-row justify-center items-center gap-3 pb-1">
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Linking.openURL('https://kyw1984-code.github.io/stockfolio/privacy.html')}
+            >
+              <Text className="text-slate-400 dark:text-slate-500 text-xs underline">
+                {isKo ? '개인정보처리방침' : 'Privacy Policy'}
+              </Text>
+            </TouchableOpacity>
+            <Text className="text-slate-300 dark:text-slate-600 text-xs">·</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => Linking.openURL('https://kyw1984-code.github.io/stockfolio/terms.html')}
+            >
+              <Text className="text-slate-400 dark:text-slate-500 text-xs underline">
+                {isKo ? '이용약관' : 'Terms of Use'}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </Pressable>
       </Pressable>
     </Modal>
