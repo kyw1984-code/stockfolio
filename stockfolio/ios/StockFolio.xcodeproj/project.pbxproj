@@ -402,7 +402,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = StockFolio/StockFolio.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = SJMRCCH98M;
 				INFOPLIST_FILE = StockFolio/Info.plist;
@@ -420,6 +421,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kyw1984.stockfolio;
 				PRODUCT_NAME = StockFolio;
+				PROVISIONING_PROFILE_SPECIFIER = "StockFolio AppStore Dist";
 				SWIFT_OBJC_BRIDGING_HEADER = "StockFolio/StockFolio-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
