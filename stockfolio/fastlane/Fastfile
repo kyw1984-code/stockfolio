@@ -47,6 +47,7 @@ platform :ios do
       output_directory:       "build",
       output_name:            "StockFolio.ipa",
       clean:                  true,
+      xcargs:                 "-allowProvisioningUpdates",
       export_options: {
         method:       "app-store",
         signingStyle: "automatic",
