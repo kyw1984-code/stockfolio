@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react';
+import { Platform } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as Notifications from 'expo-notifications';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import MobileAds from 'react-native-google-mobile-ads';
 import '../global.css';
 import { useSettingsStore } from '../stores/useSettingsStore';
 import { usePortfolioStore } from '../stores/usePortfolioStore';
 import { useDividendStore } from '../stores/useDividendStore';
+import { useTrackingStore } from '../stores/useTrackingStore';
 import { initRevenueCat, checkProEntitlement } from '../services/revenueCat';
 import {
   requestNotificationPermission,
@@ -20,11 +23,22 @@ export default function RootLayout() {
   const holdings = usePortfolioStore((s) => s.holdings);
   const dividendData = useDividendStore((s) => s.dividendData);
   const notificationListener = useRef<Notifications.EventSubscription | null>(null);
+  const { setInitialized } = useTrackingStore();
 
-  // ATT 권한 요청 → RevenueCat 초기화 → Pro entitlement 동기화
+  // ATT 권한 요청 → MobileAds 초기화 → RevenueCat 초기화 → Pro entitlement 동기화
+  // iOS에서 ATT 다이얼로그가 앱 UI가 완전히 표시된 후 나타나도록 500ms 지연
   useEffect(() => {
     async function initApp() {
-      await requestTrackingPermissionsAsync();
+      if (Platform.OS === 'ios') {
+        await new Promise<void>((resolve) => setTimeout(resolve, 500));
+        const { status } = await requestTrackingPermissionsAsync();
+        const authorized = status === 'granted';
+        setInitialized(authorized);
+        await MobileAds().initialize();
+      } else {
+        setInitialized(true);
+        await MobileAds().initialize();
+      }
       initRevenueCat();
       const pro = await checkProEntitlement();
       setIsPro(pro);
