@@ -39,15 +39,6 @@ platform :ios do
   # ─────────────────────────────────────────────
   desc "iOS IPA 빌드 (App Store 배포용)"
   lane :build do
-    key = api_key
-    get_provisioning_profile(
-      api_key:                  key,
-      app_identifier:           "com.kyw1984.stockfolio",
-      provisioning_name:        "StockFolio AppStore Dist",
-      output_path:              ".",
-      force:                    true,
-      include_all_certificates: true
-    )
     gym(
       workspace:              "ios/StockFolio.xcworkspace",
       scheme:                 "StockFolio",
@@ -57,14 +48,10 @@ platform :ios do
       output_name:            "StockFolio.ipa",
       clean:                  true,
       export_options: {
-        method:                           "app-store",
-        signingStyle:                     "manual",
-        teamID:                           "SJMRCCH98M",
-        provisioningProfiles: {
-          "com.kyw1984.stockfolio" => "StockFolio AppStore Dist"
-        }
-      },
-      xcargs: "DEVELOPMENT_TEAM=SJMRCCH98M CODE_SIGN_STYLE=Manual"
+        method:       "app-store",
+        signingStyle: "automatic",
+        teamID:       "SJMRCCH98M"
+      }
     )
     UI.success "✅ 빌드 완료: build/StockFolio.ipa"
   end
