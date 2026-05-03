@@ -18,7 +18,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.kyw1984.stockfolio',
-      buildNumber: '17',
+      buildNumber: '20',
     },
     android: {
       package: 'com.kyw1984.stockfolio',
