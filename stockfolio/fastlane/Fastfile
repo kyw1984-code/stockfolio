@@ -41,11 +41,12 @@ platform :ios do
   lane :build do
     key = api_key
     get_provisioning_profile(
-      api_key:          key,
-      app_identifier:   "com.kyw1984.stockfolio",
-      provisioning_name: "StockFolio AppStore Dist",
-      output_path:      ".",
-      force:            true
+      api_key:                  key,
+      app_identifier:           "com.kyw1984.stockfolio",
+      provisioning_name:        "StockFolio AppStore Dist",
+      output_path:              ".",
+      force:                    true,
+      include_all_certificates: true
     )
     gym(
       workspace:              "ios/StockFolio.xcworkspace",
