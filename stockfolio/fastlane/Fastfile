@@ -48,8 +48,15 @@ platform :ios do
       api_key:           key,
       app_identifier:    "com.kyw1984.stockfolio",
       provisioning_name: "StockFolio AppStore Dist",
-      output_path:       "fastlane/sigh",
-      force:             true
+      output_path:       "fastlane/sigh"
+    )
+    profile_name = lane_context[SharedValues::SIGH_NAME]
+    update_project_provisioning(
+      xcodeproj:         "ios/StockFolio.xcodeproj",
+      target_filter:     "StockFolio",
+      profile:           lane_context[SharedValues::SIGH_PROFILE_PATH],
+      build_configuration: "Release",
+      code_signing_identity: "Apple Distribution"
     )
     gym(
       workspace:              "ios/StockFolio.xcworkspace",
@@ -64,7 +71,7 @@ platform :ios do
         signingStyle:                     "manual",
         teamID:                           "SJMRCCH98M",
         provisioningProfiles: {
-          "com.kyw1984.stockfolio" => "StockFolio AppStore Dist"
+          "com.kyw1984.stockfolio" => profile_name
         }
       }
     )
